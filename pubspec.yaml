@@ -16,11 +16,8 @@ dependencies:
   bloc_concurrency: ^0.2.1
   table_calendar: ^3.0.8
   flutter_bloc: ^8.1.1
-  side_navigation: ^1.0.4
   auto_route: ^5.0.3
   equatable: ^2.0.5
-  flutter_secure_storage: ^8.0.0
-  syncfusion_flutter_datagrid: ^20.4.43
   flutter_svg: ^1.1.6
   flutter_localizations:
     sdk: flutter

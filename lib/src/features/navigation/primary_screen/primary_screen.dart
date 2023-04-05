@@ -1,3 +1,4 @@
+import 'package:diploma_mobile/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../app_router/app_router.dart';
@@ -15,7 +16,7 @@ class PrimaryScreen extends StatelessWidget {
       },
       child: SafeArea(
         child: AutoTabsScaffold(
-          // backgroundColor: AppColors.white,
+          backgroundColor: AppColors.white,
           builder: (context, child, animation) => child,
           routes: const [
             CoursesRouter(children: [CoursesScreenRoute()]),

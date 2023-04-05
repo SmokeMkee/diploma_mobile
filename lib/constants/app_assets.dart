@@ -55,5 +55,6 @@ class _Svg {
   final String addCircleBold = 'assets/svg/add_circle_bold.svg';
   final String profile = 'assets/svg/profile.svg';
   final String profileBold = 'assets/svg/profile_bold.svg';
-
+  final String myResume = 'assets/svg/my_resume.svg';
+  final String language = 'assets/svg/language.svg';
 }

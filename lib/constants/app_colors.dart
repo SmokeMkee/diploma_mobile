@@ -18,4 +18,6 @@ class AppColors {
   static const type = Color(0xFFE6E5EC);
   static const white = Color(0xFFFFFFFF);
   static const accent = Color(0xFF4A98E0);
+  static const grey2 = Color(0xFF8F94A0);
+  static const outsideIcon = Color(0xFFF1F1F3);
 }

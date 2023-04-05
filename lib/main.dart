@@ -2,6 +2,7 @@ import 'package:diploma_mobile/src/features/init/dependencies_provider/dependenc
 import 'package:diploma_mobile/src/features/localization/i_locale_repo.dart';
 import 'package:diploma_mobile/src/features/navigation/app_router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
