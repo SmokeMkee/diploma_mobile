@@ -1,8 +1,11 @@
 import 'package:diploma_mobile/constants/app_assets.dart';
 import 'package:diploma_mobile/constants/app_colors.dart';
 import 'package:diploma_mobile/constants/app_styles.dart';
+import 'package:diploma_mobile/src/features/courses/courses_detailed/ui/courses_detailed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../notification/ui/notification_screen.dart';
 
 class Courses {
   Courses({required this.coursesName, required this.teacherName});
@@ -43,7 +46,8 @@ class CoursesScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SecondRoute()),
+                    MaterialPageRoute(
+                        builder: (context) => const NotificationScreen()),
                   );
                 },
                 icon: SvgPicture.asset(AppAssets.svg.notification),
@@ -66,9 +70,17 @@ class CoursesScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: list.length,
                 itemBuilder: (context, int index) {
-                  return CoursesCard(
-                    courseName: list[index].coursesName,
-                    teacherName: list[index].teacherName,
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CoursesDetailedScreen(),
+                      ),
+                    ),
+                    child: CoursesCard(
+                      courseName: list[index].coursesName,
+                      teacherName: list[index].teacherName,
+                    ),
                   );
                 },
               ),
