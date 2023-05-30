@@ -173,23 +173,27 @@ class ProfileInfo extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 26),
-                child: Row(
-                  children: [
-                    Image.asset(AppAssets.images.profile),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Mary Jane',
-                            style: AppStyles.s20w600,
-                          ),
-                          Text('Student', style: AppStyles.s14w400),
-                        ],
+                child: Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: Row(
+                    children: [
+                      Image.asset(AppAssets.images.profile),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              'Mary Jane',
+                              style: AppStyles.s20w600,
+                            ),
+                            Text('Student', style: AppStyles.s14w400),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
