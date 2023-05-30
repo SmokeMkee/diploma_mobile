@@ -26,19 +26,27 @@ class SavedScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        child: Column(
-          children: [
-            const SearchWidget(),
-            const SizedBox(height: 15),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 7,
-                  shrinkWrap: true,
-                  itemBuilder: (context, int index) {
-                    return const SavedCard();
-                  }),
-            )
-          ],
+        child: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: [
+              const SearchWidget(),
+              const SizedBox(height: 15),
+              Expanded(
+                child: Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: ListView.builder(
+                      itemCount: 7,
+                      shrinkWrap: true,
+                      itemBuilder: (context, int index) {
+                        return const SavedCard();
+                      }),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
