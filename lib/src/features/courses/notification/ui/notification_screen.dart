@@ -57,38 +57,42 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 14),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            backgroundColor: const Color(0xFFC3DDF5),
-            radius: 23,
-            child: SvgPicture.asset(
-              AppAssets.svg.assignments,
-              color: AppColors.gray600,
-              height: 28,
-            ),
-          ),
-          const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'General English',
-                style: AppStyles.s17w500,
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              backgroundColor: const Color(0xFFC3DDF5),
+              radius: 23,
+              child: SvgPicture.asset(
+                AppAssets.svg.assignments,
+                color: AppColors.gray600,
+                height: 28,
               ),
-              Text(
-                'Graded for Homework 1',
-                style: AppStyles.s15w400.copyWith(color: AppColors.gray600),
-              )
-            ],
-          ),
-          const Spacer(),
-          Text(
-            '3min ago',
-            style: AppStyles.s14w400.copyWith(color: AppColors.gray600),
-          )
-        ],
+            ),
+            const SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'General English',
+                  style: AppStyles.s17w500,
+                ),
+                Text(
+                  'Graded for Homework 1',
+                  style: AppStyles.s15w400.copyWith(color: AppColors.gray600),
+                )
+              ],
+            ),
+            const Spacer(),
+            Text(
+              '3min ago',
+              style: AppStyles.s14w400.copyWith(color: AppColors.gray600),
+            )
+          ],
+        ),
       ),
     );
   }
