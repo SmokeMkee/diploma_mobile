@@ -31,12 +31,16 @@ class NotificationScreen extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
-                child: ListView.builder(
-                    itemCount: 12,
-                    shrinkWrap: true,
-                    itemBuilder: (context, int index) {
-                      return const NotificationCard();
-                    }),
+                child: Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: ListView.builder(
+                      itemCount: 12,
+                      shrinkWrap: true,
+                      itemBuilder: (context, int index) {
+                        return const NotificationCard();
+                      }),
+                ),
               )
             ],
           ),
