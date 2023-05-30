@@ -66,10 +66,7 @@ class CoursesScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-              Semantics(
-                  explicitChildNodes: true,
-                  enabled: true,
-                  child: const SearchWidget()),
+              const SearchWidget(),
               const SizedBox(height: 30),
               const Text('Courses', style: AppStyles.s20w600),
               Expanded(
@@ -79,16 +76,20 @@ class CoursesScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: list.length,
                     itemBuilder: (context, int index) {
-                      return GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CoursesDetailedScreen(),
+                      return Semantics(
+                        button: true,
+                        label: 'Перейти в страницу курсов',
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CoursesDetailedScreen(),
+                            ),
                           ),
-                        ),
-                        child: CoursesCard(
-                          courseName: list[index].coursesName,
-                          teacherName: list[index].teacherName,
+                          child: CoursesCard(
+                            courseName: list[index].coursesName,
+                            teacherName: list[index].teacherName,
+                          ),
                         ),
                       );
                     },
