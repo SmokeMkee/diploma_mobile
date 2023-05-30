@@ -81,69 +81,85 @@ class Grades extends StatelessWidget {
             height: 2,
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFC3DDF5),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Total score:',
-                      style:
-                          AppStyles.s15w500.copyWith(color: AppColors.gray600),
+          Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xFFC3DDF5),
+                  ),
+                  child: Semantics(
+                    explicitChildNodes: true,
+                    enabled: true,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Total score:',
+                          style:
+                              AppStyles.s15w500.copyWith(color: AppColors.gray600),
+                        ),
+                        Text(
+                          '97.65%',
+                          style:
+                              AppStyles.s20w600.copyWith(color: AppColors.gray600),
+                        )
+                      ],
                     ),
-                    Text(
-                      '97.65%',
-                      style:
-                          AppStyles.s20w600.copyWith(color: AppColors.gray600),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-              const SizedBox(width: 17),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFC3DDF5),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Attendance:',
-                      style:
-                          AppStyles.s15w500.copyWith(color: AppColors.gray600),
+                const SizedBox(width: 17),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xFFC3DDF5),
+                  ),
+                  child: Semantics(
+                    explicitChildNodes: true,
+                    enabled: true,
+                    child: Column(
+                      children: [
+                        Text(
+                          'Attendance:',
+                          style:
+                              AppStyles.s15w500.copyWith(color: AppColors.gray600),
+                        ),
+                        Text(
+                          '89.65%',
+                          style:
+                              AppStyles.s20w600.copyWith(color: AppColors.gray600),
+                        )
+                      ],
                     ),
-                    Text(
-                      '89.65%',
-                      style:
-                          AppStyles.s20w600.copyWith(color: AppColors.gray600),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Assignments',
-                style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-              ),
-              Text(
-                'Mark',
-                style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-              ),
-            ],
+          Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Assignments',
+                  style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                ),
+                Text(
+                  'Mark',
+                  style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 12),
           Expanded(
@@ -172,43 +188,55 @@ void showFeedbackSheet(BuildContext context) {
     builder: (context) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(height: 11),
-            Container(
-              height: 4,
-              width: 40,
-              decoration: BoxDecoration(
-                  color: AppColors.gray600,
-                  borderRadius: BorderRadius.circular(5)),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Feedback',
-                  style: AppStyles.s20w600,
+        child: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 11),
+              Container(
+                height: 4,
+                width: 40,
+                decoration: BoxDecoration(
+                    color: AppColors.gray600,
+                    borderRadius: BorderRadius.circular(5)),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Semantics(
+                explicitChildNodes: true,
+                enabled: true,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Feedback',
+                      style: AppStyles.s20w600,
+                    ),
+                    Semantics(
+                      button: true,
+                      label: 'Какая то страница',
+                      child: GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: const CircleAvatar(
+                            backgroundColor: AppColors.gray400,
+                            radius: 12,
+                            child: Icon(
+                              Icons.close,
+                              color: AppColors.white,
+                              size: 17,
+                            )),
+                      ),
+                    )
+                  ],
                 ),
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const CircleAvatar(
-                      backgroundColor: AppColors.gray400,
-                      radius: 12,
-                      child: Icon(
-                        Icons.close,
-                        color: AppColors.white,
-                        size: 17,
-                      )),
-                )
-              ],
-            ),
-            const SizedBox(height: 18),
-            const FeedbackCard(),
-          ],
+              ),
+              const SizedBox(height: 18),
+              const FeedbackCard(),
+            ],
+          ),
         ),
       );
     },
@@ -226,36 +254,40 @@ class FeedbackCard extends StatelessWidget {
           border: Border.all(width: 1, color: AppColors.gray200)),
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 15,
-                child: Image.asset(AppAssets.images.profile),
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'Julio James',
-                style: AppStyles.s14w500,
-              ),
-              const SizedBox(width: 16),
-              Text(
-                '6 hours ago',
-                style: AppStyles.s11w400.copyWith(
-                  fontSize: 12,
-                  color: AppColors.gray400,
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  child: Image.asset(AppAssets.images.profile),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            'I am truly impressed with how you have managed to meet every goal set before you. Good job!',
-            style: AppStyles.s11w400.copyWith(fontSize: 12),
-          )
-        ],
+                const SizedBox(width: 12),
+                const Text(
+                  'Julio James',
+                  style: AppStyles.s14w500,
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  '6 hours ago',
+                  style: AppStyles.s11w400.copyWith(
+                    fontSize: 12,
+                    color: AppColors.gray400,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'I am truly impressed with how you have managed to meet every goal set before you. Good job!',
+              style: AppStyles.s11w400.copyWith(fontSize: 12),
+            )
+          ],
+        ),
       ),
     );
   }
