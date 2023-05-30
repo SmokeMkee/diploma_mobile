@@ -19,17 +19,21 @@ class CoursesDetailedScreen extends StatelessWidget {
         ),
         backgroundColor: AppColors.white,
         centerTitle: true,
-        title: Column(
-          children: const [
-            Text(
-              'General English',
-              style: AppStyles.s15w600,
-            ),
-            Text(
-              'Alan Alexander',
-              style: AppStyles.s11w400,
-            )
-          ],
+        title: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: const [
+              Text(
+                'General English',
+                style: AppStyles.s15w600,
+              ),
+              Text(
+                'Alan Alexander',
+                style: AppStyles.s11w400,
+              )
+            ],
+          ),
         ),
       ),
       body: Padding(
@@ -37,27 +41,39 @@ class CoursesDetailedScreen extends StatelessWidget {
           vertical: 20,
           horizontal: 16,
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, int index) {
-                  return GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CourseUnit(),
-                      ),
-                    ),
-                    child: CoursesDetailedCard(
-                      index: index,
-                    ),
-                  );
-                },
+        child: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: [
+              Expanded(
+                child: Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: ListView.builder(
+                    itemCount: 4,
+                    itemBuilder: (context, int index) {
+                      return Semantics(
+                        button: true,
+                        label: 'какая то страница',
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CourseUnit(),
+                            ),
+                          ),
+                          child: CoursesDetailedCard(
+                            index: index,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -79,31 +95,35 @@ class CoursesDetailedCard extends StatelessWidget {
         elevation: 10,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 21),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 25,
-                backgroundColor: AppColors.gray200,
-                child: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: AppColors.white,
-                  child: Text(
-                    (index + 1).toString(),
-                    style: AppStyles.s20w600.copyWith(
-                      color: AppColors.gray900,
+          child: Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: AppColors.gray200,
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: AppColors.white,
+                    child: Text(
+                      (index + 1).toString(),
+                      style: AppStyles.s20w600.copyWith(
+                        color: AppColors.gray900,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  'Week ${index + 1}',
-                  style: AppStyles.s18w500,
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    'Week ${index + 1}',
+                    style: AppStyles.s18w500,
+                  ),
                 ),
-              ),
-              SvgPicture.asset(AppAssets.svg.arrowRight2),
-            ],
+                SvgPicture.asset(AppAssets.svg.arrowRight2),
+              ],
+            ),
           ),
         ),
       ),
