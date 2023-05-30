@@ -66,40 +66,44 @@ class AssignmentsScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
-          children: [
-            const TabBar(
-              isScrollable: true,
-              indicatorColor: AppColors.accent,
-              indicatorSize: TabBarIndicatorSize.label,
-              labelColor: AppColors.primary,
-              labelStyle: AppStyles.s15w600,
-              unselectedLabelColor: AppColors.gray600,
-              tabs: [
-                Text('All assignments'),
-                Text('Assigned'),
-                Text('Past due')
-              ],
-            ),
-            Container(
-              height: 1,
-              width: double.infinity,
-              color: AppColors.gray200,
-            ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  ListView.builder(
-                    itemBuilder: (context, int index) {
-                      return const AssignmentsCard();
-                    },
-                    shrinkWrap: true,
-                    itemCount: 4,
-                  ),
+        body: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: [
+              const TabBar(
+                isScrollable: true,
+                indicatorColor: AppColors.accent,
+                indicatorSize: TabBarIndicatorSize.label,
+                labelColor: AppColors.primary,
+                labelStyle: AppStyles.s15w600,
+                unselectedLabelColor: AppColors.gray600,
+                tabs: [
+                  Text('All assignments'),
+                  Text('Assigned'),
+                  Text('Past due')
                 ],
               ),
-            )
-          ],
+              Container(
+                height: 1,
+                width: double.infinity,
+                color: AppColors.gray200,
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    ListView.builder(
+                      itemBuilder: (context, int index) {
+                        return const AssignmentsCard();
+                      },
+                      shrinkWrap: true,
+                      itemCount: 4,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -121,31 +125,39 @@ class AssignmentsCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 6),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-          child: Row(
-            children: [
-              const CourseContainer(),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Homework_1',
-                    style: AppStyles.s14w500.copyWith(
-                      fontSize: 12,
-                    ),
+          child: Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Row(
+              children: [
+                const CourseContainer(),
+                const SizedBox(width: 12),
+                Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Homework_1',
+                        style: AppStyles.s14w500.copyWith(
+                          fontSize: 12,
+                        ),
+                      ),
+                      AssignmentCardTile(
+                        svgPath: AppAssets.svg.time,
+                        title: 'Due April 24, 2023 23:59',
+                      ),
+                      AssignmentCardTile(
+                        svgPath: AppAssets.svg.courses,
+                        title: 'Course: General English',
+                      ),
+                    ],
                   ),
-                  AssignmentCardTile(
-                    svgPath: AppAssets.svg.time,
-                    title: 'Due April 24, 2023 23:59',
-                  ),
-                  AssignmentCardTile(
-                    svgPath: AppAssets.svg.courses,
-                    title: 'Course: General English',
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
