@@ -20,47 +20,55 @@ class GradeBookDetailedScreen extends StatelessWidget {
           ),
           backgroundColor: AppColors.white,
           centerTitle: true,
-          title: Column(
-            children: const [
-              Text(
-                'General English',
-                style: AppStyles.s15w600,
+          title: Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Column(
+              children: const [
+                Text(
+                  'General English',
+                  style: AppStyles.s15w600,
+                ),
+                Text(
+                  'Alan Alexander',
+                  style: AppStyles.s11w400,
+                )
+              ],
+            ),
+          ),
+        ),
+        body: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
               ),
-              Text(
-                'Alan Alexander',
-                style: AppStyles.s11w400,
+              TabBar(
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorWeight: 4,
+                labelStyle: AppStyles.s14w500,
+                labelColor: AppColors.primary,
+                unselectedLabelColor: AppColors.gray600,
+                unselectedLabelStyle:
+                    AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                tabs: const [
+                  Text(
+                    'Grades',
+                  ),
+                  Text(
+                    'Attendance',
+                  ),
+                ],
+              ),
+              const Expanded(
+                child: TabBarView(
+                  children: [Grades(), Attendance()],
+                ),
               )
             ],
           ),
-        ),
-        body: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            TabBar(
-              indicatorSize: TabBarIndicatorSize.label,
-              indicatorWeight: 4,
-              labelStyle: AppStyles.s14w500,
-              labelColor: AppColors.primary,
-              unselectedLabelColor: AppColors.gray600,
-              unselectedLabelStyle:
-                  AppStyles.s14w500.copyWith(color: AppColors.gray600),
-              tabs: const [
-                Text(
-                  'Grades',
-                ),
-                Text(
-                  'Attendance',
-                ),
-              ],
-            ),
-            const Expanded(
-              child: TabBarView(
-                children: [Grades(), Attendance()],
-              ),
-            )
-          ],
         ),
       ),
     );
@@ -74,103 +82,107 @@ class Grades extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          const Divider(
-            color: AppColors.primary,
-            height: 2,
-          ),
-          const SizedBox(height: 20),
-          Semantics(
-            explicitChildNodes: true,
-            enabled: true,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFC3DDF5),
-                  ),
-                  child: Semantics(
-                    explicitChildNodes: true,
-                    enabled: true,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Total score:',
-                          style:
-                              AppStyles.s15w500.copyWith(color: AppColors.gray600),
-                        ),
-                        Text(
-                          '97.65%',
-                          style:
-                              AppStyles.s20w600.copyWith(color: AppColors.gray600),
-                        )
-                      ],
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Column(
+          children: [
+            const Divider(
+              color: AppColors.primary,
+              height: 2,
+            ),
+            const SizedBox(height: 20),
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFC3DDF5),
+                    ),
+                    child: Semantics(
+                      explicitChildNodes: true,
+                      enabled: true,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Total score:',
+                            style:
+                                AppStyles.s15w500.copyWith(color: AppColors.gray600),
+                          ),
+                          Text(
+                            '97.65%',
+                            style:
+                                AppStyles.s20w600.copyWith(color: AppColors.gray600),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 17),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFC3DDF5),
-                  ),
-                  child: Semantics(
-                    explicitChildNodes: true,
-                    enabled: true,
-                    child: Column(
-                      children: [
-                        Text(
-                          'Attendance:',
-                          style:
-                              AppStyles.s15w500.copyWith(color: AppColors.gray600),
-                        ),
-                        Text(
-                          '89.65%',
-                          style:
-                              AppStyles.s20w600.copyWith(color: AppColors.gray600),
-                        )
-                      ],
+                  const SizedBox(width: 17),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xFFC3DDF5),
+                    ),
+                    child: Semantics(
+                      explicitChildNodes: true,
+                      enabled: true,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Attendance:',
+                            style:
+                                AppStyles.s15w500.copyWith(color: AppColors.gray600),
+                          ),
+                          Text(
+                            '89.65%',
+                            style:
+                                AppStyles.s20w600.copyWith(color: AppColors.gray600),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Semantics(
-            explicitChildNodes: true,
-            enabled: true,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Assignments',
-                  style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-                ),
-                Text(
-                  'Mark',
-                  style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-                ),
-              ],
+            const SizedBox(height: 20),
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Assignments',
+                    style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                  ),
+                  Text(
+                    'Mark',
+                    style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 7,
-              itemBuilder: (context, int index) {
-                return const GradeCard();
-              },
-            ),
-          )
-        ],
+            const SizedBox(height: 12),
+            Expanded(
+              child: ListView.builder(
+                itemCount: 7,
+                itemBuilder: (context, int index) {
+                  return const GradeCard();
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -260,26 +272,30 @@ class FeedbackCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 15,
-                  child: Image.asset(AppAssets.images.profile),
-                ),
-                const SizedBox(width: 12),
-                const Text(
-                  'Julio James',
-                  style: AppStyles.s14w500,
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  '6 hours ago',
-                  style: AppStyles.s11w400.copyWith(
-                    fontSize: 12,
-                    color: AppColors.gray400,
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 15,
+                    child: Image.asset(AppAssets.images.profile),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 12),
+                  const Text(
+                    'Julio James',
+                    style: AppStyles.s14w500,
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    '6 hours ago',
+                    style: AppStyles.s11w400.copyWith(
+                      fontSize: 12,
+                      color: AppColors.gray400,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 12),
             Text(
