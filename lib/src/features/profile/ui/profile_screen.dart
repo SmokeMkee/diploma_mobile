@@ -181,15 +181,19 @@ class ProfileInfo extends StatelessWidget {
                       Image.asset(AppAssets.images.profile),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              'Mary Jane',
-                              style: AppStyles.s20w600,
-                            ),
-                            Text('Student', style: AppStyles.s14w400),
-                          ],
+                        child: Semantics(
+                          explicitChildNodes: true,
+                          enabled: true,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text(
+                                'Mary Jane',
+                                style: AppStyles.s20w600,
+                              ),
+                              Text('Student', style: AppStyles.s14w400),
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -207,26 +211,34 @@ class ProfileInfo extends StatelessWidget {
               const SizedBox(
                 height: 21,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Email address',
-                      style: AppStyles.s14w400.copyWith(color: AppColors.grey2)),
-                  const Text('buitek.bayan@gmail.com', style: AppStyles.s14w400),
-                ],
+              Semantics(
+                explicitChildNodes: true,
+                enabled: true,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Email address',
+                        style: AppStyles.s14w400.copyWith(color: AppColors.grey2)),
+                    const Text('buitek.bayan@gmail.com', style: AppStyles.s14w400),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 13,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Phone number',
-                    style: AppStyles.s14w400.copyWith(color: AppColors.grey2),
-                  ),
-                  const Text('8 777 123 12 34', style: AppStyles.s14w400),
-                ],
+              Semantics(
+                explicitChildNodes: true,
+                enabled: true,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Phone number',
+                      style: AppStyles.s14w400.copyWith(color: AppColors.grey2),
+                    ),
+                    const Text('8 777 123 12 34', style: AppStyles.s14w400),
+                  ],
+                ),
               ),
             ],
           ),
