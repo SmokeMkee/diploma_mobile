@@ -68,12 +68,16 @@ class ScheduleScreen extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     Expanded(
-                      child: ListView.builder(
-                        itemBuilder: (context, int index) {
-                          return const ScheduleCard();
-                        },
-                        shrinkWrap: true,
-                        itemCount: 3,
+                      child: Semantics(
+                        explicitChildNodes: true,
+                        enabled: true,
+                        child: ListView.builder(
+                          itemBuilder: (context, int index) {
+                            return const ScheduleCard();
+                          },
+                          shrinkWrap: true,
+                          itemCount: 3,
+                        ),
                       ),
                     ),
                   ],
