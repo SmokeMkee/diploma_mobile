@@ -84,32 +84,40 @@ class SecondConstructor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'USING PRESENT PERFECT',
-          style: AppStyles.s14w500,
-        ),
-        const SizedBox(height: 10),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset(AppAssets.svg.indicator),
-            const SizedBox(width: 10),
-            Flexible(
-              child: Text('Present Perfect is an action that '
-                  'took place in the past, but matters to us'
-                  ' now, in the present. Therefore, Present'
-                  ' Perfect is used when it is necessary to '
-                  'show the result of a perfect action in the'
-                  ' present.Describe below chart using Present Perfect',
-                style: AppStyles.s11w400.copyWith(fontSize: 12),),
+    return Semantics(
+      explicitChildNodes: true,
+      enabled: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'USING PRESENT PERFECT',
+            style: AppStyles.s14w500,
+          ),
+          const SizedBox(height: 10),
+          Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SvgPicture.asset(AppAssets.svg.indicator),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text('Present Perfect is an action that '
+                      'took place in the past, but matters to us'
+                      ' now, in the present. Therefore, Present'
+                      ' Perfect is used when it is necessary to '
+                      'show the result of a perfect action in the'
+                      ' present.Describe below chart using Present Perfect',
+                    style: AppStyles.s11w400.copyWith(fontSize: 12),),
+                ),
+              ],
             ),
-          ],
-        ),
-        Image.asset(AppAssets.images.diagram)
-      ],
+          ),
+          Image.asset(AppAssets.images.diagram)
+        ],
+      ),
     );
   }
 }
