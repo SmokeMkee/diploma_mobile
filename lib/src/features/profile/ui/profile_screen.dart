@@ -13,52 +13,56 @@ class ProfileScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 50,
-              ),
-              const ProfileInfo(),
-              const SizedBox(
-                height: 16,
-              ),
-              SettingsList(
-                cards: [
-                  SettingsItem(
-                    name: 'My resumes',
-                    iconPath: AppAssets.svg.myResume,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              SettingsList(
-                cards: [
-                  SettingsItem(
-                    name: 'Account settings',
-                    iconPath: AppAssets.svg.settings,
-                  ),
-                  SettingsItem(
-                    name: 'Notifications',
-                    iconPath: AppAssets.svg.notification,
-                  ),
-                  SettingsItem(
-                    name: 'Language',
-                    iconPath: AppAssets.svg.language,
-                    secondText: 'English',
-                  ),
-                  SettingsItem(
-                    name: 'Additional settings',
-                    iconPath: AppAssets.svg.accessibility,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              const ProfileButton(),
-            ],
+          child: Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                const ProfileInfo(),
+                const SizedBox(
+                  height: 16,
+                ),
+                SettingsList(
+                  cards: [
+                    SettingsItem(
+                      name: 'My resumes',
+                      iconPath: AppAssets.svg.myResume,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                SettingsList(
+                  cards: [
+                    SettingsItem(
+                      name: 'Account settings',
+                      iconPath: AppAssets.svg.settings,
+                    ),
+                    SettingsItem(
+                      name: 'Notifications',
+                      iconPath: AppAssets.svg.notification,
+                    ),
+                    SettingsItem(
+                      name: 'Language',
+                      iconPath: AppAssets.svg.language,
+                      secondText: 'English',
+                    ),
+                    SettingsItem(
+                      name: 'Additional settings',
+                      iconPath: AppAssets.svg.accessibility,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                const ProfileButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -73,32 +77,36 @@ class ProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+    return Semantics(
+      explicitChildNodes: true,
+      enabled: true,
+      child: Row(
+        children: [
+          Expanded(
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                backgroundColor: AppColors.accent,
               ),
-              backgroundColor: AppColors.accent,
-            ),
-            onPressed: () {},
-            icon: SvgPicture.asset(
-              AppAssets.svg.logOut,
-              color: Colors.white,
-            ),
-            label: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 11),
-              child: Text(
-                'Log out',
-                style:
-                    AppStyles.s14w500.copyWith(color: Colors.white),
+              onPressed: () {},
+              icon: SvgPicture.asset(
+                AppAssets.svg.logOut,
+                color: Colors.white,
+              ),
+              label: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 11),
+                child: Text(
+                  'Log out',
+                  style:
+                      AppStyles.s14w500.copyWith(color: Colors.white),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
