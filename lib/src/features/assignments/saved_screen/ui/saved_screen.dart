@@ -64,29 +64,37 @@ class SavedCard extends StatelessWidget {
           border: Border.all(width: 1, color: AppColors.gray200)),
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Present Perfect',
-                style: AppStyles.s15w600,
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Present Perfect',
+                    style: AppStyles.s15w600,
+                  ),
+                  Text(
+                    'Course name: General English',
+                    style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                  ),
+                  Text(
+                    'Subcourse: Week 1',
+                    style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                  )
+                ],
               ),
-              Text(
-                'Course name: General English',
-                style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-              ),
-              Text(
-                'Subcourse: Week 1',
-                style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-              )
-            ],
-          ),
-          SvgPicture.asset(AppAssets.svg.threeDots)
-        ],
+            ),
+            SvgPicture.asset(AppAssets.svg.threeDots)
+          ],
+        ),
       ),
     );
   }
