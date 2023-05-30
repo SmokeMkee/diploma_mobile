@@ -156,22 +156,26 @@ class CoursesCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 13),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      courseName,
-                      style: AppStyles.s18w500,
-                    ),
-                    Text(
-                      'Teacher: Alan Alexander',
-                      style: AppStyles.s11w400.copyWith(
-                        fontSize: 12,
-                        color: AppColors.gray600,
+                Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        courseName,
+                        style: AppStyles.s18w500,
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Teacher: Alan Alexander',
+                        style: AppStyles.s11w400.copyWith(
+                          fontSize: 12,
+                          color: AppColors.gray600,
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),
