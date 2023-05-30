@@ -73,18 +73,22 @@ class NotificationCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'General English',
-                  style: AppStyles.s17w500,
-                ),
-                Text(
-                  'Graded for Homework 1',
-                  style: AppStyles.s15w400.copyWith(color: AppColors.gray600),
-                )
-              ],
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'General English',
+                    style: AppStyles.s17w500,
+                  ),
+                  Text(
+                    'Graded for Homework 1',
+                    style: AppStyles.s15w400.copyWith(color: AppColors.gray600),
+                  )
+                ],
+              ),
             ),
             const Spacer(),
             Text(
