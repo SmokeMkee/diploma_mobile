@@ -360,13 +360,17 @@ class Attendance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        Divider(
-          color: AppColors.primary,
-          height: 2,
-        )
-      ],
+    return Semantics(
+      explicitChildNodes: true,
+      enabled: true,
+      child: Column(
+        children: const [
+          Divider(
+            color: AppColors.primary,
+            height: 2,
+          )
+        ],
+      ),
     );
   }
 }
