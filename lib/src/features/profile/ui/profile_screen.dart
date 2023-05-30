@@ -176,27 +176,35 @@ class ProfileInfo extends StatelessWidget {
                 child: Semantics(
                   explicitChildNodes: true,
                   enabled: true,
-                  child: Row(
-                    children: [
-                      Image.asset(AppAssets.images.profile),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Semantics(
-                          explicitChildNodes: true,
-                          enabled: true,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              Text(
-                                'Mary Jane',
-                                style: AppStyles.s20w600,
+                  child: Semantics(
+                    explicitChildNodes: true,
+                    enabled: true,
+                    child: Row(
+                      children: [
+                        Image.asset(AppAssets.images.profile),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Semantics(
+                            explicitChildNodes: true,
+                            enabled: true,
+                            child: Semantics(
+                              explicitChildNodes: true,
+                              enabled: true,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    'Mary Jane',
+                                    style: AppStyles.s20w600,
+                                  ),
+                                  Text('Student', style: AppStyles.s14w400),
+                                ],
                               ),
-                              Text('Student', style: AppStyles.s14w400),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
