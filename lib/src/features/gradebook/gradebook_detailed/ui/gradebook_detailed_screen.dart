@@ -174,11 +174,15 @@ class Grades extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Expanded(
-              child: ListView.builder(
-                itemCount: 7,
-                itemBuilder: (context, int index) {
-                  return const GradeCard();
-                },
+              child: Semantics(
+                explicitChildNodes: true,
+                enabled: true,
+                child: ListView.builder(
+                  itemCount: 7,
+                  itemBuilder: (context, int index) {
+                    return const GradeCard();
+                  },
+                ),
               ),
             )
           ],
