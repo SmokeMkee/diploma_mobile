@@ -15,39 +15,47 @@ class _NavBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: isActive ? Colors.white : Colors.transparent,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              child: Semantics(
-                explicitChildNodes: true,
-                enabled: true,
-                child: Column(
-                  children: [
-                    SvgPicture.asset(
-                      isActive ? activeIconPath : inactiveIconPath,
+    return Semantics(
+      explicitChildNodes: true,
+      enabled: true,
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: isActive ? Colors.white : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: Semantics(
+                    explicitChildNodes: true,
+                    enabled: true,
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(
+                          isActive ? activeIconPath : inactiveIconPath,
+                        ),
+                        const SizedBox(height: 5.0),
+                        Text(
+                          label,
+                          style: AppStyles.s11w400,
+                          textAlign: TextAlign.center,
+                          softWrap: false,
+                          overflow: TextOverflow.fade,
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 5.0),
-                    Text(
-                      label,
-                      style: AppStyles.s11w400,
-                      textAlign: TextAlign.center,
-                      softWrap: false,
-                      overflow: TextOverflow.fade,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
