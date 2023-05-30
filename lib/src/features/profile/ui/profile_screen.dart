@@ -258,40 +258,44 @@ class SettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CircleAvatar(
-          radius: 23,
-          backgroundColor: AppColors.outsideIcon,
-          child: SvgPicture.asset(
-            settingsItem.iconPath,
-            color: AppColors.gray600,
-          ),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Expanded(
-          child: Text(
-            settingsItem.name,
-            style: AppStyles.s14w500,
-          ),
-        ),
-        if (settingsItem.secondText != null)
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Text(
-              settingsItem.secondText!,
-              style: AppStyles.s11w400
-                  .copyWith(color: AppColors.gray600, fontSize: 12),
+    return Semantics(
+      explicitChildNodes: true,
+      enabled: true,
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 23,
+            backgroundColor: AppColors.outsideIcon,
+            child: SvgPicture.asset(
+              settingsItem.iconPath,
+              color: AppColors.gray600,
             ),
           ),
-        SvgPicture.asset(
-          AppAssets.svg.arrowRight2,
-          width: 16,
-          color: AppColors.gray600,
-        ),
-      ],
+          const SizedBox(
+            width: 16,
+          ),
+          Expanded(
+            child: Text(
+              settingsItem.name,
+              style: AppStyles.s14w500,
+            ),
+          ),
+          if (settingsItem.secondText != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Text(
+                settingsItem.secondText!,
+                style: AppStyles.s11w400
+                    .copyWith(color: AppColors.gray600, fontSize: 12),
+              ),
+            ),
+          SvgPicture.asset(
+            AppAssets.svg.arrowRight2,
+            width: 16,
+            color: AppColors.gray600,
+          ),
+        ],
+      ),
     );
   }
 }

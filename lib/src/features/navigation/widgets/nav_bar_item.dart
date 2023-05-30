@@ -25,20 +25,24 @@ class _NavBarItem extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              child: Column(
-                children: [
-                  SvgPicture.asset(
-                    isActive ? activeIconPath : inactiveIconPath,
-                  ),
-                  const SizedBox(height: 5.0),
-                  Text(
-                    label,
-                    style: AppStyles.s11w400,
-                    textAlign: TextAlign.center,
-                    softWrap: false,
-                    overflow: TextOverflow.fade,
-                  ),
-                ],
+              child: Semantics(
+                explicitChildNodes: true,
+                enabled: true,
+                child: Column(
+                  children: [
+                    SvgPicture.asset(
+                      isActive ? activeIconPath : inactiveIconPath,
+                    ),
+                    const SizedBox(height: 5.0),
+                    Text(
+                      label,
+                      style: AppStyles.s11w400,
+                      textAlign: TextAlign.center,
+                      softWrap: false,
+                      overflow: TextOverflow.fade,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
