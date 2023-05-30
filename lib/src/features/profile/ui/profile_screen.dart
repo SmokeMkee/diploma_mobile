@@ -125,24 +125,28 @@ class SettingsList extends StatelessWidget {
           color: AppColors.gray200,
         ),
       ),
-      child: ListView.separated(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
-        itemCount: cards.length,
-        separatorBuilder: (BuildContext context, int index) => Padding(
-          padding: const EdgeInsets.fromLTRB(63, 12, 0, 12),
-          child: Container(
-            height: 1,
-            width: double.infinity,
-            color: AppColors.gray200,
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+          itemCount: cards.length,
+          separatorBuilder: (BuildContext context, int index) => Padding(
+            padding: const EdgeInsets.fromLTRB(63, 12, 0, 12),
+            child: Container(
+              height: 1,
+              width: double.infinity,
+              color: AppColors.gray200,
+            ),
           ),
+          itemBuilder: (BuildContext context, int index) {
+            return SettingsCard(
+              settingsItem: cards[index],
+            );
+          },
         ),
-        itemBuilder: (BuildContext context, int index) {
-          return SettingsCard(
-            settingsItem: cards[index],
-          );
-        },
       ),
     );
   }
