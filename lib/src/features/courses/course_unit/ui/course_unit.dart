@@ -204,52 +204,68 @@ class _LectureInfoContainerState extends State<LectureInfoContainer> {
         borderRadius: BorderRadius.circular(10),
         color: AppColors.gray200.withOpacity(0.1),
       ),
-      child: Column(
-        children: [
-          LessonPageBuilder(
-            controller: pageController,
-            imagePath: [
-              ...List.generate(
-                10,
-                (index) =>
-                    'https://www.gannett-cdn.com/presto/2021/03/22/NRCD/9d9dd9e4-e84a'
-                    '-402e-ba8f-daa659e6e6c5-PhotoWord_003'
-                    '.JPG?width=1320&height=850&fit=crop&format=pjpg&auto=webp',
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Column(
+          children: [
+            LessonPageBuilder(
+              controller: pageController,
+              imagePath: [
+                ...List.generate(
+                  10,
+                  (index) =>
+                      'https://www.gannett-cdn.com/presto/2021/03/22/NRCD/9d9dd9e4-e84a'
+                      '-402e-ba8f-daa659e6e6c5-PhotoWord_003'
+                      '.JPG?width=1320&height=850&fit=crop&format=pjpg&auto=webp',
+                ),
+              ],
+              valueChanged: (int value) {
+                setState(() {
+                  currentPage = value + 1;
+                });
+              },
+            ),
+            const SizedBox(height: 25),
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Semantics(
+                    button: true,
+                    label: 'Перейти на предыдущую страницу',
+                    child: GestureDetector(
+                      onTap: () {
+                        pageController.previousPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeIn);
+                      },
+                      child: SvgPicture.asset(AppAssets.svg.arrowLeft2),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 31),
+                    child: Text('$currentPage out of 10'),
+                  ),
+                  Semantics(
+                    button: true,
+                    label: 'Перейти на следующую страницу',
+                    child: GestureDetector(
+                      onTap: () {
+                        pageController.nextPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeIn);
+                      },
+                      child: SvgPicture.asset(AppAssets.svg.arrowRight2),
+                    ),
+                  ),
+                ],
               ),
-            ],
-            valueChanged: (int value) {
-              setState(() {
-                currentPage = value + 1;
-              });
-            },
-          ),
-          const SizedBox(height: 25),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  pageController.previousPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeIn);
-                },
-                child: SvgPicture.asset(AppAssets.svg.arrowLeft2),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 31),
-                child: Text('$currentPage out of 10'),
-              ),
-              GestureDetector(
-                onTap: () {
-                  pageController.nextPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeIn);
-                },
-                child: SvgPicture.asset(AppAssets.svg.arrowRight2),
-              ),
-            ],
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
