@@ -230,27 +230,35 @@ class AppBarTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(
-          AppAssets.images.profile,
-          height: 45,
-        ),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Hello',
-              style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+    return Semantics(
+      explicitChildNodes: true,
+      enabled: true,
+      child: Row(
+        children: [
+          Image.asset(
+            AppAssets.images.profile,
+            height: 45,
+          ),
+          const SizedBox(width: 12),
+          Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hello',
+                  style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                ),
+                const Text(
+                  'Bayan Buitek',
+                  style: AppStyles.s18w500,
+                ),
+              ],
             ),
-            const Text(
-              'Bayan Buitek',
-              style: AppStyles.s18w500,
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
