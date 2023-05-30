@@ -18,52 +18,60 @@ class CourseUnit extends StatelessWidget {
         ),
         backgroundColor: AppColors.white,
         centerTitle: true,
-        title: Column(
-          children: const [
-            Text(
-              'General English',
-              style: AppStyles.s15w600,
-            ),
-            Text(
-              'Alan Alexander',
-              style: AppStyles.s11w400,
-            )
-          ],
+        title: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: const [
+              Text(
+                'General English',
+                style: AppStyles.s15w600,
+              ),
+              Text(
+                'Alan Alexander',
+                style: AppStyles.s11w400,
+              )
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-          child: Column(
-            children: [
-              const Text(
-                'Lecture',
-                style: AppStyles.s14w500,
-              ),
-              Container(
-                height: 1,
-                width: double.infinity,
-                color: AppColors.gray200,
-              ),
-              const SizedBox(height: 24),
-              const LectureInfoContainer(),
-              const SizedBox(height: 24),
-              Container(
-                height: 1,
-                width: double.infinity,
-                color: AppColors.gray200,
-              ),
-              const SizedBox(height: 24),
-              const FirstConstructor(),
-              const SizedBox(height: 24),
-              Container(
-                height: 1,
-                width: double.infinity,
-                color: AppColors.gray200,
-              ),
-              const SizedBox(height: 24),
-              const SecondConstructor(),
-            ],
+          child: Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Column(
+              children: [
+                const Text(
+                  'Lecture',
+                  style: AppStyles.s14w500,
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  color: AppColors.gray200,
+                ),
+                const SizedBox(height: 24),
+                const LectureInfoContainer(),
+                const SizedBox(height: 24),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  color: AppColors.gray200,
+                ),
+                const SizedBox(height: 24),
+                const FirstConstructor(),
+                const SizedBox(height: 24),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  color: AppColors.gray200,
+                ),
+                const SizedBox(height: 24),
+                const SecondConstructor(),
+              ],
+            ),
           ),
         ),
       ),
