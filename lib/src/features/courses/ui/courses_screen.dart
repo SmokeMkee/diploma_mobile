@@ -59,33 +59,44 @@ class CoursesScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            const SearchWidget(),
-            const SizedBox(height: 30),
-            const Text('Courses', style: AppStyles.s20w600),
-            Expanded(
-              child: ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (context, int index) {
-                  return GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CoursesDetailedScreen(),
-                      ),
-                    ),
-                    child: CoursesCard(
-                      courseName: list[index].coursesName,
-                      teacherName: list[index].teacherName,
-                    ),
-                  );
-                },
+        child: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: const SearchWidget()),
+              const SizedBox(height: 30),
+              const Text('Courses', style: AppStyles.s20w600),
+              Expanded(
+                child: Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (context, int index) {
+                      return GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CoursesDetailedScreen(),
+                          ),
+                        ),
+                        child: CoursesCard(
+                          courseName: list[index].coursesName,
+                          teacherName: list[index].teacherName,
+                        ),
+                      );
+                    },
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -124,41 +135,45 @@ class CoursesCard extends StatelessWidget {
         elevation: 8,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
-          child: Row(
-            children: [
-              Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: AppColors.accent,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Text(
-                    courseName.split(' ')[0][0] + courseName.split(' ')[1][0],
-                    style: AppStyles.s18w500.copyWith(color: AppColors.white),
+          child: Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Row(
+              children: [
+                Container(
+                  width: 45,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: AppColors.accent,
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                ),
-              ),
-              const SizedBox(width: 13),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    courseName,
-                    style: AppStyles.s18w500,
-                  ),
-                  Text(
-                    'Teacher: Alan Alexander',
-                    style: AppStyles.s11w400.copyWith(
-                      fontSize: 12,
-                      color: AppColors.gray600,
+                  child: Center(
+                    child: Text(
+                      courseName.split(' ')[0][0] + courseName.split(' ')[1][0],
+                      style: AppStyles.s18w500.copyWith(color: AppColors.white),
                     ),
                   ),
-                ],
-              )
-            ],
+                ),
+                const SizedBox(width: 13),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      courseName,
+                      style: AppStyles.s18w500,
+                    ),
+                    Text(
+                      'Teacher: Alan Alexander',
+                      style: AppStyles.s11w400.copyWith(
+                        fontSize: 12,
+                        color: AppColors.gray600,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
