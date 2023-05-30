@@ -320,36 +320,48 @@ class GradeCard extends StatelessWidget {
           border: Border.all(width: 1, color: AppColors.gray200)),
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Classwork_1',
-                style: AppStyles.s15w600,
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Classwork_1',
+                    style: AppStyles.s15w600,
+                  ),
+                  Text(
+                    'Submitted',
+                    style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                  )
+                ],
               ),
-              Text(
-                'Submitted',
-                style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-              )
-            ],
-          ),
-          Column(
-            children: [
-              const Text(
-                '-',
-                style: AppStyles.s18w500,
+            ),
+            Semantics(
+              explicitChildNodes: true,
+              enabled: true,
+              child: Column(
+                children: [
+                  const Text(
+                    '-',
+                    style: AppStyles.s18w500,
+                  ),
+                  IconButton(
+                      onPressed: () {
+                        showFeedbackSheet(context);
+                      },
+                      icon: SvgPicture.asset(AppAssets.svg.feedback))
+                ],
               ),
-              IconButton(
-                  onPressed: () {
-                    showFeedbackSheet(context);
-                  },
-                  icon: SvgPicture.asset(AppAssets.svg.feedback))
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
