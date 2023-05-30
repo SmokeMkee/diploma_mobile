@@ -53,13 +53,17 @@ class AssignmentsScreen extends StatelessWidget {
               ),
             ),
           ],
-          title: Column(
-            children: const [
-              Text(
-                'Assignments',
-                style: AppStyles.s15w600,
-              ),
-            ],
+          title: Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Column(
+              children: const [
+                Text(
+                  'Assignments',
+                  style: AppStyles.s15w600,
+                ),
+              ],
+            ),
           ),
         ),
         body: Column(
