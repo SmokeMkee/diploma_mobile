@@ -127,43 +127,50 @@ class FirstConstructor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'RULE',
-          style: AppStyles.s14w500,
-        ),
-        const SizedBox(height: 10),
-        Text(
-          'Present Perfect causes difficulties for students,'
-          ' because in Russian it has no analogues. In general, '
-          'Present Perfect indicates an action that took place '
-          'in the indefinite past before the moment of speech,'
-          ' but has some connection with the present - we are '
-          'interested in the result of this action now - in the '
-          'present.',
-          style: AppStyles.s11w400.copyWith(fontSize: 12),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-
-          children: [
-            SvgPicture.asset(AppAssets.svg.lightBulb),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                'Words indicating the Present Perfect are '
-                'usually adverbs of indefinite tense: recently, '
-                'finally, ever, never, just, for, since, yet,'
-                ' already.',
-                style: AppStyles.s11w400.copyWith(fontSize: 12),
-              ),
-            )
-          ],
-        )
-      ],
+    return Semantics(
+      explicitChildNodes: true,
+      enabled: true,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'RULE',
+            style: AppStyles.s14w500,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            'Present Perfect causes difficulties for students,'
+            ' because in Russian it has no analogues. In general, '
+            'Present Perfect indicates an action that took place '
+            'in the indefinite past before the moment of speech,'
+            ' but has some connection with the present - we are '
+            'interested in the result of this action now - in the '
+            'present.',
+            style: AppStyles.s11w400.copyWith(fontSize: 12),
+          ),
+          const SizedBox(height: 10),
+          Semantics(
+            explicitChildNodes: true,
+            enabled: true,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SvgPicture.asset(AppAssets.svg.lightBulb),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    'Words indicating the Present Perfect are '
+                    'usually adverbs of indefinite tense: recently, '
+                    'finally, ever, never, just, for, since, yet,'
+                    ' already.',
+                    style: AppStyles.s11w400.copyWith(fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }
