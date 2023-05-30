@@ -25,17 +25,21 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 12,
-                  shrinkWrap: true,
-                  itemBuilder: (context, int index) {
-                    return const NotificationCard();
-                  }),
-            )
-          ],
+        child: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                    itemCount: 12,
+                    shrinkWrap: true,
+                    itemBuilder: (context, int index) {
+                      return const NotificationCard();
+                    }),
+              )
+            ],
+          ),
         ),
       ),
     );
