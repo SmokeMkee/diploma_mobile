@@ -1,4 +1,6 @@
+import 'package:diploma_mobile/src/features/assignments/data/repo/repo_assignment.dart';
 import 'package:diploma_mobile/src/features/courses/courses_detailed/data/repo/repo_units.dart';
+import 'package:diploma_mobile/src/features/gradebook/data/repo/repo_gradebook.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,16 @@ class ReposProvider extends StatelessWidget {
         ),
         Provider(
           create: (context) => RepoUnits(
+            api: RepositoryProvider.of<Api>(context),
+          ),
+        ),
+        Provider(
+          create: (context) => RepoAssignment(
+            api: RepositoryProvider.of<Api>(context),
+          ),
+        ),
+        Provider(
+          create: (context) => RepoGradeBook(
             api: RepositoryProvider.of<Api>(context),
           ),
         )

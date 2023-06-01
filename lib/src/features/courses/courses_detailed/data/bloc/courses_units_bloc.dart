@@ -11,14 +11,16 @@ class CoursesUnitsBloc extends Bloc<CoursesUnitsEvent, CoursesUnitsState> {
   final RepoUnits repo;
 
   CoursesUnitsBloc({required this.repo}) : super(CoursesUnitsInitial()) {
-    on<FetchCoursesUnitsEvent>((event, emit) async {
-      emit(CoursesUnitsLoading());
-      try {
-        final response = await repo.fetch(event.courseId);
-        emit(CoursesUnitsData(listUnits: response));
-      } catch (e) {
-        emit(CoursesUnitsError(message: 'fetch courses unit error'));
-      }
-    });
+    on<FetchCoursesUnitsEvent>(
+      (event, emit) async {
+        emit(CoursesUnitsLoading());
+        try {
+          final response = await repo.fetch(event.courseId);
+          emit(CoursesUnitsData(listUnits: response));
+        } catch (e) {
+          emit(CoursesUnitsError(message: 'fetch course units error'));
+        }
+      },
+    );
   }
 }

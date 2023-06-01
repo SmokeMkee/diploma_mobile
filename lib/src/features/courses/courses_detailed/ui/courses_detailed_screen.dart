@@ -33,13 +33,13 @@ class CoursesDetailedScreen extends StatelessWidget {
           explicitChildNodes: true,
           enabled: true,
           child: Column(
-            children: const [
+            children: [
               Text(
-                'General English',
+                courseName,
                 style: AppStyles.s15w600,
               ),
               Text(
-                'Alan Alexander',
+                teacherName,
                 style: AppStyles.s11w400,
               )
             ],

@@ -1,10 +1,12 @@
 import 'package:diploma_mobile/constants/app_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../constants/app_colors.dart';
 import '../../../../constants/app_styles.dart';
 import '../../schedule/ui/schedule_screen.dart';
+import '../data/bloc/assignments_bloc.dart';
 import '../saved_screen/ui/saved_screen.dart';
 
 class AssignmentsScreen extends StatelessWidget {
@@ -92,12 +94,37 @@ class AssignmentsScreen extends StatelessWidget {
               Expanded(
                 child: TabBarView(
                   children: [
-                    ListView.builder(
-                      itemBuilder: (context, int index) {
-                        return const AssignmentsCard();
+                    BlocBuilder<AssignmentsBloc, AssignmentsState>(
+                      builder: (context, state) {
+                        if (state is AssignmentsLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        if (state is AssignmentsError) {
+                          return Center(
+                            child: Text(state.message),
+                          );
+                        }
+                        if (state is AssignmentsData) {
+                          return state.listAssignments.isEmpty ?
+                              const Center(
+                                child: Text('Assignments empty'),
+                              )
+                              : ListView.builder(
+                            itemBuilder: (context, int index) {
+                              return AssignmentsCard(
+                                assignmentName: state.listAssignments[index].heading ?? '0',
+                                courseName: '',
+                                date: DateTime.now(),
+                              );
+                            },
+                            shrinkWrap: true,
+                            itemCount: state.listAssignments.length,
+                          );
+                        }
+                        return const SizedBox.shrink();
                       },
-                      shrinkWrap: true,
-                      itemCount: 4,
                     ),
                   ],
                 ),
@@ -111,7 +138,15 @@ class AssignmentsScreen extends StatelessWidget {
 }
 
 class AssignmentsCard extends StatelessWidget {
-  const AssignmentsCard({Key? key}) : super(key: key);
+  const AssignmentsCard(
+      {Key? key,
+      required this.assignmentName,
+      required this.courseName,
+      required this.date})
+      : super(key: key);
+  final String assignmentName;
+  final String courseName;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +175,7 @@ class AssignmentsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Homework_1',
+                        assignmentName,
                         style: AppStyles.s14w500.copyWith(
                           fontSize: 12,
                         ),

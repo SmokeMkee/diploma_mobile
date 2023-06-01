@@ -1,28 +1,17 @@
 import 'package:diploma_mobile/constants/app_styles.dart';
 import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/ui/gradebook_detailed_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../constants/app_colors.dart';
 import '../../../courses/ui/courses_screen.dart';
+import '../../data/bloc/gradebook_bloc.dart';
 
 class GradeBookScreen extends StatelessWidget {
   const GradeBookScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Courses> list = [
-      Courses(
-          coursesName: 'General English',
-          teacherName: 'Teacher: Alan Alexander'),
-      Courses(
-          coursesName: 'UX/UI Design', teacherName: 'Teacher: Edward Jones'),
-      Courses(
-          coursesName: 'Web Development',
-          teacherName: 'Teacher: Charles Franklin'),
-      Courses(
-          coursesName: 'Animation Animation',
-          teacherName: 'Teacher: Julio James'),
-    ];
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -41,32 +30,50 @@ class GradeBookScreen extends StatelessWidget {
           child: Column(
             children: [
               const SearchWidget(),
-              Expanded(
-                child: Semantics(
-                  explicitChildNodes: true,
-                  enabled: true,
-                  child: ListView.builder(
-                    itemCount: list.length,
-                    itemBuilder: (context, int index) {
-                      return Semantics(
-                        button: true,
-                        label: 'Какая то страница',
-                        child: GestureDetector(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const GradeBookDetailedScreen(),
-                            ),
-                          ),
-                          child: CoursesCard(
-                            courseName: list[index].coursesName,
-                            teacherName: list[index].teacherName,
-                          ),
+              BlocBuilder<GradebookBloc, GradebookState>(
+                builder: (context, state) {
+                  if (state is GradebookLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is GradebookError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  }
+                  if (state is GradebookData) {
+                    return Expanded(
+                      child: Semantics(
+                        explicitChildNodes: true,
+                        enabled: true,
+                        child: ListView.builder(
+                          itemCount: state.listGradeBook.length,
+                          itemBuilder: (context, int index) {
+                            return Semantics(
+                              button: true,
+                              label: 'Какая то страница',
+                              child: GestureDetector(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const GradeBookDetailedScreen(),
+                                  ),
+                                ),
+                                child: CoursesCard(
+                                  courseName: state.listGradeBook[index].fileName ?? 'no info',
+                                  teacherName:  state.listGradeBook[index].fileName ?? 'nso info',
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
             ],
           ),
@@ -75,6 +82,7 @@ class GradeBookScreen extends StatelessWidget {
     );
   }
 }
+
 class CoursesCard extends StatelessWidget {
   const CoursesCard(
       {Key? key, required this.courseName, required this.teacherName})
