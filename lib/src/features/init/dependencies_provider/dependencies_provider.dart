@@ -11,7 +11,11 @@ class DependenciesProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ReposProvider(
-      child: Builder(builder: builder),
+      child: BlocsProvider(
+        child: Builder(
+          builder: builder,
+        ),
+      ),
     );
   }
 }
