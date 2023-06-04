@@ -1,191 +1,165 @@
 import 'package:diploma_mobile/constants/app_assets.dart';
 import 'package:diploma_mobile/constants/app_styles.dart';
+import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/bloc/gradebook_detailed_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../constants/app_colors.dart';
 
-class GradeBookDetailedScreen extends StatelessWidget {
-  const GradeBookDetailedScreen({Key? key}) : super(key: key);
+class GradeBookDetailedScreen extends StatefulWidget {
+  const GradeBookDetailedScreen(
+      {Key? key,
+      required this.courseId,
+      required this.teacherName,
+      required this.courseName})
+      : super(key: key);
+  final int courseId;
+  final String teacherName;
+  final String courseName;
+
+  @override
+  State<GradeBookDetailedScreen> createState() =>
+      _GradeBookDetailedScreenState();
+}
+
+class _GradeBookDetailedScreenState extends State<GradeBookDetailedScreen> {
+  @override
+  void initState() {
+    context
+        .read<GradebookDetailedBloc>()
+        .add(FetchGradebookEvent(courseId: widget.courseId));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          iconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
-          backgroundColor: AppColors.white,
-          centerTitle: true,
-          title: Semantics(
-            explicitChildNodes: true,
-            enabled: true,
-            child: Column(
-              children: const [
-                Text(
-                  'General English',
-                  style: AppStyles.s15w600,
-                ),
-                Text(
-                  'Alan Alexander',
-                  style: AppStyles.s11w400,
-                )
-              ],
-            ),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
         ),
-        body: Semantics(
+        backgroundColor: AppColors.white,
+        centerTitle: true,
+        title: Semantics(
           explicitChildNodes: true,
           enabled: true,
           child: Column(
             children: [
-              const SizedBox(
-                height: 30,
+              Text(
+                widget.courseName,
+                style: AppStyles.s15w600,
               ),
-              TabBar(
-                indicatorSize: TabBarIndicatorSize.label,
-                indicatorWeight: 4,
-                labelStyle: AppStyles.s14w500,
-                labelColor: AppColors.primary,
-                unselectedLabelColor: AppColors.gray600,
-                unselectedLabelStyle:
-                    AppStyles.s14w500.copyWith(color: AppColors.gray600),
-                tabs: const [
-                  Text(
-                    'Grades',
-                  ),
-                  Text(
-                    'Attendance',
-                  ),
-                ],
-              ),
-              const Expanded(
-                child: TabBarView(
-                  children: [Grades(), Attendance()],
-                ),
+              Text(
+                widget.teacherName,
+                style: AppStyles.s11w400,
               )
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class Grades extends StatelessWidget {
-  const Grades({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Semantics(
-        explicitChildNodes: true,
-        enabled: true,
-        child: Column(
-          children: [
-            const Divider(
-              color: AppColors.primary,
-              height: 2,
-            ),
-            const SizedBox(height: 20),
-            Semantics(
-              explicitChildNodes: true,
-              enabled: true,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xFFC3DDF5),
-                    ),
-                    child: Semantics(
-                      explicitChildNodes: true,
-                      enabled: true,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Total score:',
-                            style:
-                                AppStyles.s15w500.copyWith(color: AppColors.gray600),
-                          ),
-                          Text(
-                            '97.65%',
-                            style:
-                                AppStyles.s20w600.copyWith(color: AppColors.gray600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 17),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xFFC3DDF5),
-                    ),
-                    child: Semantics(
-                      explicitChildNodes: true,
-                      enabled: true,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Attendance:',
-                            style:
-                                AppStyles.s15w500.copyWith(color: AppColors.gray600),
-                          ),
-                          Text(
-                            '89.65%',
-                            style:
-                                AppStyles.s20w600.copyWith(color: AppColors.gray600),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: Column(
+            children: [
+              const Divider(
+                color: AppColors.primary,
+                height: 2,
               ),
-            ),
-            const SizedBox(height: 20),
-            Semantics(
-              explicitChildNodes: true,
-              enabled: true,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Assignments',
-                    style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-                  ),
-                  Text(
-                    'Mark',
-                    style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
-                  ),
-                ],
+              const SizedBox(height: 20),
+              BlocBuilder<GradebookDetailedBloc, GradebookDetailedState>(
+                builder: (context, state) {
+                  if (state is GradebookDetailedData) {
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 40),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: const Color(0xFFC3DDF5),
+                      ),
+                      child: Semantics(
+                        explicitChildNodes: true,
+                        enabled: true,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Total score:',
+                              style: AppStyles.s15w500
+                                  .copyWith(color: AppColors.gray600),
+                            ),
+                            Text(
+                              '${state.listGradeBook.total} %',
+                              style: AppStyles.s20w600
+                                  .copyWith(color: AppColors.gray600),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                },
               ),
-            ),
-            const SizedBox(height: 12),
-            Expanded(
-              child: Semantics(
+              const SizedBox(height: 20),
+              Semantics(
                 explicitChildNodes: true,
                 enabled: true,
-                child: ListView.builder(
-                  itemCount: 7,
-                  itemBuilder: (context, int index) {
-                    return const GradeCard();
-                  },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Assignments',
+                      style:
+                          AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                    ),
+                    Text(
+                      'Mark',
+                      style:
+                          AppStyles.s14w500.copyWith(color: AppColors.gray600),
+                    ),
+                  ],
                 ),
               ),
-            )
-          ],
+              const SizedBox(height: 12),
+              Expanded(
+                child: Semantics(
+                  explicitChildNodes: true,
+                  enabled: true,
+                  child: BlocBuilder<GradebookDetailedBloc,
+                      GradebookDetailedState>(
+                    builder: (context, state) {
+                      if (state is GradebookDetailedData) {
+                        var list = state.listGradeBook.studentGradeBookDtoList;
+                        return ListView.builder(
+                          itemCount: list?.length ?? 0,
+                          itemBuilder: (context, int index) {
+                            return GradeCard(
+                              grade: list?[index].grade ?? 'no info',
+                              assignmentName: 'Test',
+                            );
+                          },
+                        );
+                      }
+                      if (state is GradebookDetailedInitial) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      if (state is GradebookDetailedError) {
+                        return Center(
+                          child: Text(state.message),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -314,7 +288,10 @@ class FeedbackCard extends StatelessWidget {
 }
 
 class GradeCard extends StatelessWidget {
-  const GradeCard({Key? key}) : super(key: key);
+  const GradeCard({Key? key, required this.grade, required this.assignmentName})
+      : super(key: key);
+  final String grade;
+  final String assignmentName;
 
   @override
   Widget build(BuildContext context) {
@@ -336,8 +313,8 @@ class GradeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Classwork_1',
+                  Text(
+                    assignmentName,
                     style: AppStyles.s15w600,
                   ),
                   Text(
@@ -352,15 +329,15 @@ class GradeCard extends StatelessWidget {
               enabled: true,
               child: Column(
                 children: [
-                  const Text(
-                    '-',
+                  Text(
+                    grade,
                     style: AppStyles.s18w500,
                   ),
-                  IconButton(
-                      onPressed: () {
-                        showFeedbackSheet(context);
-                      },
-                      icon: SvgPicture.asset(AppAssets.svg.feedback))
+                  // IconButton(
+                  //     onPressed: () {
+                  //       showFeedbackSheet(context);
+                  //     },
+                  //     icon: SvgPicture.asset(AppAssets.svg.feedback))
                 ],
               ),
             )

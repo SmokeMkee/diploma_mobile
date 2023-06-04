@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_route/empty_router_widgets.dart';
 import 'package:diploma_mobile/src/features/assignments/ui/assignments_screen.dart';
+import 'package:diploma_mobile/src/features/auth/sign/ui/auth_screen.dart';
 import 'package:diploma_mobile/src/features/courses/ui/courses_screen.dart';
 import 'package:diploma_mobile/src/features/gradebook/ui/widgets/gradebook_screen.dart';
 import 'package:diploma_mobile/src/features/profile/ui/profile_screen.dart';
@@ -16,6 +17,9 @@ part 'app_router.gr.dart';
 
 @AdaptiveAutoRouter(
   routes: <AutoRoute>[
+    AutoRoute(
+      page: AuthScreen,
+    ),
     CustomRoute(
       page: PrimaryScreen,
       initial: true,

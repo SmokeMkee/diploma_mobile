@@ -4,6 +4,8 @@ import 'package:diploma_mobile/constants/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../my_resume/ui/my_resume.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -30,6 +32,14 @@ class ProfileScreen extends StatelessWidget {
                     SettingsItem(
                       name: 'My resumes',
                       iconPath: AppAssets.svg.myResume,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyResume(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -41,19 +51,18 @@ class ProfileScreen extends StatelessWidget {
                     SettingsItem(
                       name: 'Account settings',
                       iconPath: AppAssets.svg.settings,
+                      onTap: () {},
                     ),
                     SettingsItem(
                       name: 'Notifications',
                       iconPath: AppAssets.svg.notification,
+                      onTap: () {},
                     ),
                     SettingsItem(
                       name: 'Language',
                       iconPath: AppAssets.svg.language,
                       secondText: 'English',
-                    ),
-                    SettingsItem(
-                      name: 'Additional settings',
-                      iconPath: AppAssets.svg.accessibility,
+                      onTap: () {},
                     ),
                   ],
                 ),
@@ -99,8 +108,7 @@ class ProfileButton extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 11),
                 child: Text(
                   'Log out',
-                  style:
-                      AppStyles.s14w500.copyWith(color: Colors.white),
+                  style: AppStyles.s14w500.copyWith(color: Colors.white),
                 ),
               ),
             ),
@@ -226,8 +234,10 @@ class ProfileInfo extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('Email address',
-                        style: AppStyles.s14w400.copyWith(color: AppColors.grey2)),
-                    const Text('buitek.bayan@gmail.com', style: AppStyles.s14w400),
+                        style:
+                            AppStyles.s14w400.copyWith(color: AppColors.grey2)),
+                    const Text('buitek.bayan@gmail.com',
+                        style: AppStyles.s14w400),
                   ],
                 ),
               ),
@@ -266,43 +276,46 @@ class SettingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      explicitChildNodes: true,
-      enabled: true,
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 23,
-            backgroundColor: AppColors.outsideIcon,
-            child: SvgPicture.asset(
-              settingsItem.iconPath,
-              color: AppColors.gray600,
-            ),
-          ),
-          const SizedBox(
-            width: 16,
-          ),
-          Expanded(
-            child: Text(
-              settingsItem.name,
-              style: AppStyles.s14w500,
-            ),
-          ),
-          if (settingsItem.secondText != null)
-            Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Text(
-                settingsItem.secondText!,
-                style: AppStyles.s11w400
-                    .copyWith(color: AppColors.gray600, fontSize: 12),
+    return GestureDetector(
+      onTap: settingsItem.onTap,
+      child: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 23,
+              backgroundColor: AppColors.outsideIcon,
+              child: SvgPicture.asset(
+                settingsItem.iconPath,
+                color: AppColors.gray600,
               ),
             ),
-          SvgPicture.asset(
-            AppAssets.svg.arrowRight2,
-            width: 16,
-            color: AppColors.gray600,
-          ),
-        ],
+            const SizedBox(
+              width: 16,
+            ),
+            Expanded(
+              child: Text(
+                settingsItem.name,
+                style: AppStyles.s14w500,
+              ),
+            ),
+            if (settingsItem.secondText != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Text(
+                  settingsItem.secondText!,
+                  style: AppStyles.s11w400
+                      .copyWith(color: AppColors.gray600, fontSize: 12),
+                ),
+              ),
+            SvgPicture.asset(
+              AppAssets.svg.arrowRight2,
+              width: 16,
+              color: AppColors.gray600,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -312,10 +325,11 @@ class SettingsItem {
   final String name;
   final String iconPath;
   final String? secondText;
+  final VoidCallback onTap;
 
-  SettingsItem({
-    required this.name,
-    required this.iconPath,
-    this.secondText,
-  });
+  SettingsItem(
+      {required this.name,
+      required this.iconPath,
+      this.secondText,
+      required this.onTap});
 }

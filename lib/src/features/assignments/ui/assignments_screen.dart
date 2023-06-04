@@ -107,21 +107,26 @@ class AssignmentsScreen extends StatelessWidget {
                           );
                         }
                         if (state is AssignmentsData) {
-                          return state.listAssignments.isEmpty ?
-                              const Center(
-                                child: Text('Assignments empty'),
-                              )
+                          return state.listAssignments.isEmpty
+                              ? const Center(
+                                  child: Text('Assignments empty'),
+                                )
                               : ListView.builder(
-                            itemBuilder: (context, int index) {
-                              return AssignmentsCard(
-                                assignmentName: state.listAssignments[index].heading ?? '0',
-                                courseName: '',
-                                date: DateTime.now(),
-                              );
-                            },
-                            shrinkWrap: true,
-                            itemCount: state.listAssignments.length,
-                          );
+                                  itemBuilder: (context, int index) {
+                                    return AssignmentsCard(
+                                      assignmentName: state
+                                              .listAssignments[index].heading ??
+                                          '0',
+                                      courseName: state.listAssignments[index]
+                                          .instructions ?? 'sd',
+                                      date: state.listAssignments[index]
+                                              .startDate ??
+                                          DateTime.now().toString(),
+                                    );
+                                  },
+                                  shrinkWrap: true,
+                                  itemCount: state.listAssignments.length,
+                                );
                         }
                         return const SizedBox.shrink();
                       },
@@ -146,7 +151,7 @@ class AssignmentsCard extends StatelessWidget {
       : super(key: key);
   final String assignmentName;
   final String courseName;
-  final DateTime date;
+  final String date;
 
   @override
   Widget build(BuildContext context) {
@@ -182,11 +187,11 @@ class AssignmentsCard extends StatelessWidget {
                       ),
                       AssignmentCardTile(
                         svgPath: AppAssets.svg.time,
-                        title: 'Due April 24, 2023 23:59',
+                        title: date.toString(),
                       ),
                       AssignmentCardTile(
                         svgPath: AppAssets.svg.courses,
-                        title: 'Course: General English',
+                        title: courseName,
                       ),
                     ],
                   ),

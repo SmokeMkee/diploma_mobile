@@ -1,11 +1,15 @@
 import 'package:diploma_mobile/src/features/assignments/data/repo/repo_assignment.dart';
+import 'package:diploma_mobile/src/features/courses/course_unit_material/data/repo/repo_unit_material.dart';
 import 'package:diploma_mobile/src/features/courses/courses_detailed/data/repo/repo_units.dart';
 import 'package:diploma_mobile/src/features/gradebook/data/repo/repo_gradebook.dart';
+import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/repo/repo_gradebook_detailed.dart';
+import 'package:diploma_mobile/src/features/profile/my_resume/data/repo/repo_resume.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../api/api.dart';
+import '../../../auth/sign/data/repo/repo_sign.dart';
 import '../../../courses/data/repo/repo_courses.dart';
 import '../../../localization/locale_repo.dart';
 
@@ -43,7 +47,25 @@ class ReposProvider extends StatelessWidget {
           create: (context) => RepoGradeBook(
             api: RepositoryProvider.of<Api>(context),
           ),
-        )
+        ),
+        Provider(
+          create: (context) => RepoSign(),
+        ),
+        Provider(
+          create: (context) => RepoGradeBookDetailed(
+            api: RepositoryProvider.of<Api>(context),
+          ),
+        ),
+        Provider(
+          create: (context) => RepoUnitMaterial(
+            api: RepositoryProvider.of<Api>(context),
+          ),
+        ),
+        Provider(
+          create: (context) => RepoResume(
+            api: RepositoryProvider.of<Api>(context),
+          ),
+        ),
       ],
       child: child,
     );

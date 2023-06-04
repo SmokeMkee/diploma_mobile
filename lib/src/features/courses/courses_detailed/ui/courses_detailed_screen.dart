@@ -1,4 +1,3 @@
-import 'package:diploma_mobile/src/features/courses/course_unit/ui/course_unit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../constants/app_assets.dart';
 import '../../../../../constants/app_colors.dart';
 import '../../../../../constants/app_styles.dart';
+import '../../course_unit_material/ui/course_unit.dart';
 import '../data/bloc/courses_units_bloc.dart';
 
 class CoursesDetailedScreen extends StatelessWidget {
@@ -83,12 +83,18 @@ class CoursesDetailedScreen extends StatelessWidget {
                                 onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => const CourseUnit(),
+                                    builder: (context) => CourseUnit(
+                                      unitSectionName:
+                                          state.listUnits[index].id.toString() ??
+                                              'No Info',
+                                      courseName: courseName,
+                                      unitId: state.listUnits[index].id ?? 0,
+                                    ),
                                   ),
                                 ),
                                 child: CoursesDetailedCard(
                                   index: index,
-                                  unitName: state.listUnits[index].unitName ??
+                                  unitName: state.listUnits[index].id.toString() ??
                                       'No Info',
                                 ),
                               ),

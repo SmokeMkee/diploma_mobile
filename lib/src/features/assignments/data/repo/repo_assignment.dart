@@ -10,8 +10,7 @@ class RepoAssignment {
   final Api api;
 
   Future<List<Assignments>> fetch() async {
-    final result = await api.dio.get('/students/get-student-all-assignments',
-        queryParameters: {"courseId": 0});
+    final result = await api.dio.get('/students/get-student-all-assignments');
     return assignmentsListFromJson(json.encode(result.data));
   }
 }

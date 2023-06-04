@@ -88,8 +88,7 @@ class CoursesScreen extends StatelessWidget {
                             );
                           },
                           child: CoursesCard(
-                            courseName: state.listCourses[index].courseId.toString() + ' ' + '231' ??
-                                'No Info',
+                            courseName: state.listCourses[index].courseId.toString() + ' dsadsa' ?? 'no info',
                             teacherName:
                                 state.listCourses[index].email ?? 'No Info',
                           ),

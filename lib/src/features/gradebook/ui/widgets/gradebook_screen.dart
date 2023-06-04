@@ -54,16 +54,28 @@ class GradeBookScreen extends StatelessWidget {
                               button: true,
                               label: 'Какая то страница',
                               child: GestureDetector(
-                                onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const GradeBookDetailedScreen(),
-                                  ),
-                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          GradeBookDetailedScreen(
+                                        courseId: state.listGradeBook[index]
+                                                .courseId ??
+                                            0,
+                                        teacherName: state.listGradeBook[index].email ?? 'no info',
+                                        courseName: state.listGradeBook[index].courseName ?? 'no info',
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: CoursesCard(
-                                  courseName: state.listGradeBook[index].fileName ?? 'no info',
-                                  teacherName:  state.listGradeBook[index].fileName ?? 'nso info',
+                                  courseName:
+                                      state.listGradeBook[index].courseName ??
+                                          'no info',
+                                  teacherName:
+                                      state.listGradeBook[index].email ??
+                                          'no info',
                                 ),
                               ),
                             );
@@ -133,7 +145,7 @@ class CoursesCard extends StatelessWidget {
                         style: AppStyles.s18w500,
                       ),
                       Text(
-                        'Teacher: Alan Alexander',
+                        teacherName,
                         style: AppStyles.s11w400.copyWith(
                           fontSize: 12,
                           color: AppColors.gray600,

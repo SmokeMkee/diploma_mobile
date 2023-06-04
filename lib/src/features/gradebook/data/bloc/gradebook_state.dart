@@ -15,5 +15,5 @@ class GradebookError extends GradebookState {
 class GradebookData extends GradebookState {
   GradebookData({required this.listGradeBook});
 
-  final List<GradeBook> listGradeBook;
+  final List<CoursesList> listGradeBook;
 }

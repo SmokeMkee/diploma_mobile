@@ -1,12 +1,35 @@
+import 'package:diploma_mobile/src/features/courses/course_unit_material/data/bloc/unit_material_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../constants/app_assets.dart';
 import '../../../../../constants/app_colors.dart';
 import '../../../../../constants/app_styles.dart';
 
-class CourseUnit extends StatelessWidget {
-  const CourseUnit({Key? key}) : super(key: key);
+class CourseUnit extends StatefulWidget {
+  const CourseUnit(
+      {Key? key,
+      required this.unitSectionName,
+      required this.courseName,
+      required this.unitId})
+      : super(key: key);
+  final String unitSectionName;
+  final String courseName;
+  final int unitId;
+
+  @override
+  State<CourseUnit> createState() => _CourseUnitState();
+}
+
+class _CourseUnitState extends State<CourseUnit> {
+  @override
+  void initState() {
+    context.read<UnitMaterialBloc>().add(
+          FetchSectionUnitMaterialEvent(unitId: widget.unitId),
+        );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +45,13 @@ class CourseUnit extends StatelessWidget {
           explicitChildNodes: true,
           enabled: true,
           child: Column(
-            children: const [
+            children: [
               Text(
-                'General English',
+                widget.unitSectionName,
                 style: AppStyles.s15w600,
               ),
               Text(
-                'Alan Alexander',
+                widget.courseName,
                 style: AppStyles.s11w400,
               )
             ],
@@ -41,36 +64,44 @@ class CourseUnit extends StatelessWidget {
           child: Semantics(
             explicitChildNodes: true,
             enabled: true,
-            child: Column(
-              children: [
-                const Text(
-                  'Lecture',
-                  style: AppStyles.s14w500,
-                ),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  color: AppColors.gray200,
-                ),
-                const SizedBox(height: 24),
-                const LectureInfoContainer(),
-                const SizedBox(height: 24),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  color: AppColors.gray200,
-                ),
-                const SizedBox(height: 24),
-                const FirstConstructor(),
-                const SizedBox(height: 24),
-                Container(
-                  height: 1,
-                  width: double.infinity,
-                  color: AppColors.gray200,
-                ),
-                const SizedBox(height: 24),
-                const SecondConstructor(),
-              ],
+            child: BlocBuilder<UnitMaterialBloc, UnitMaterialState>(
+              builder: (context, state) {
+                if (state is UnitMaterialData) {
+                  return DefaultTabController(
+                    length: state.tabs.length,
+                    child: Column(
+                      children: [
+                        TabBar(
+                          isScrollable: true,
+                          indicatorColor: AppColors.accent,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          labelColor: AppColors.primary,
+                          labelStyle: AppStyles.s15w600,
+                          unselectedLabelColor: AppColors.gray600,
+                          tabs: List.generate(
+                            state.tabs.length,
+                            (index) => Text(
+                              state.tabs[index].id.toString() ?? 'no info',
+                            ),
+                          ),
+                        ),
+                        // TabBarView(
+                        //   children: [],
+                        // )
+                      ],
+                    ),
+                  );
+                }
+                if (state is UnitMaterialError) {
+                  return Text(state.message);
+                }
+                if (state is UnitMaterialLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
             ),
           ),
         ),
@@ -79,6 +110,39 @@ class CourseUnit extends StatelessWidget {
   }
 }
 
+
+
+// Column(
+// children: [
+// const Text(
+// 'Lecture',
+// style: AppStyles.s14w500,
+// ),
+// Container(
+// height: 1,
+// width: double.infinity,
+// color: AppColors.gray200,
+// ),
+// const SizedBox(height: 24),
+// const LectureInfoContainer(),
+// const SizedBox(height: 24),
+// Container(
+// height: 1,
+// width: double.infinity,
+// color: AppColors.gray200,
+// ),
+// const SizedBox(height: 24),
+// const FirstConstructor(),
+// const SizedBox(height: 24),
+// Container(
+// height: 1,
+// width: double.infinity,
+// color: AppColors.gray200,
+// ),
+// const SizedBox(height: 24),
+// const SecondConstructor(),
+// ],
+// ),
 class SecondConstructor extends StatelessWidget {
   const SecondConstructor({Key? key}) : super(key: key);
 
@@ -104,13 +168,15 @@ class SecondConstructor extends StatelessWidget {
                 SvgPicture.asset(AppAssets.svg.indicator),
                 const SizedBox(width: 10),
                 Flexible(
-                  child: Text('Present Perfect is an action that '
-                      'took place in the past, but matters to us'
-                      ' now, in the present. Therefore, Present'
-                      ' Perfect is used when it is necessary to '
-                      'show the result of a perfect action in the'
-                      ' present.Describe below chart using Present Perfect',
-                    style: AppStyles.s11w400.copyWith(fontSize: 12),),
+                  child: Text(
+                    'Present Perfect is an action that '
+                    'took place in the past, but matters to us'
+                    ' now, in the present. Therefore, Present'
+                    ' Perfect is used when it is necessary to '
+                    'show the result of a perfect action in the'
+                    ' present.Describe below chart using Present Perfect',
+                    style: AppStyles.s11w400.copyWith(fontSize: 12),
+                  ),
                 ),
               ],
             ),

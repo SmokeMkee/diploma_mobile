@@ -17,6 +17,12 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    AuthScreenRoute.name: (routeData) {
+      return AdaptivePage<dynamic>(
+        routeData: routeData,
+        child: const AuthScreen(),
+      );
+    },
     PrimaryScreenRoute.name: (routeData) {
       return CustomPage<dynamic>(
         routeData: routeData,
@@ -91,6 +97,10 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
+          AuthScreenRoute.name,
+          path: '/auth-screen',
+        ),
+        RouteConfig(
           PrimaryScreenRoute.name,
           path: '/',
           children: [
@@ -155,8 +165,20 @@ class _$AppRouter extends RootStackRouter {
               ],
             ),
           ],
-        )
+        ),
       ];
+}
+
+/// generated route for
+/// [AuthScreen]
+class AuthScreenRoute extends PageRouteInfo<void> {
+  const AuthScreenRoute()
+      : super(
+          AuthScreenRoute.name,
+          path: '/auth-screen',
+        );
+
+  static const String name = 'AuthScreenRoute';
 }
 
 /// generated route for
