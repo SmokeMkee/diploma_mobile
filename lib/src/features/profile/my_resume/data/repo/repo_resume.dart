@@ -10,7 +10,6 @@ class RepoResume {
 
   Future<List<Resume>> fetchResumeList() async {
     final result = await api.dio.get('/user-info/get-resume');
-    print(result.data);
     return resumeFromJson(json.encode(result.data));
   }
 }

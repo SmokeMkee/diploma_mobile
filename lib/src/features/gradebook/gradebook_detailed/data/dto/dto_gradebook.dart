@@ -1,23 +1,23 @@
 // To parse this JSON data, do
 //
-//     final gradeBook = gradeBookFromJson(jsonString);
+//     final grades = gradesFromJson(jsonString);
 
 import 'dart:convert';
 
-GradeBook gradeBookFromJson(String str) => GradeBook.fromJson(json.decode(str));
+Grades gradesFromJson(String str) => Grades.fromJson(json.decode(str));
 
-String gradeBookToJson(GradeBook data) => json.encode(data.toJson());
+String gradesToJson(Grades data) => json.encode(data.toJson());
 
-class GradeBook {
+class Grades {
   final List<StudentGradeBookDtoList>? studentGradeBookDtoList;
-  final num? total;
+  final double? total;
 
-  GradeBook({
+  Grades({
     this.studentGradeBookDtoList,
     this.total,
   });
 
-  factory GradeBook.fromJson(Map<String, dynamic> json) => GradeBook(
+  factory Grades.fromJson(Map<String, dynamic> json) => Grades(
     studentGradeBookDtoList: json["studentGradeBookDtoList"] == null ? [] : List<StudentGradeBookDtoList>.from(json["studentGradeBookDtoList"]!.map((x) => StudentGradeBookDtoList.fromJson(x))),
     total: json["total"],
   );

@@ -8,11 +8,13 @@ class RepoGradeBookDetailed {
 
   final Api api;
 
-  Future<GradeBook> fetch(int courseId) async {
+  Future<Grades> fetch(int courseId) async {
+    print(courseId);
     final result =
         await api.dio.get('/students/get-student-grades', queryParameters: {
       "courseId": courseId,
     });
-    return gradeBookFromJson(json.encode(result.data));
+    print('dasdasldals;,d;,lad;,l');
+    return gradesFromJson(json.encode(result.data));
   }
 }

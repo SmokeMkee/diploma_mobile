@@ -14,19 +14,21 @@ class CoursesList {
   final String? email;
   final int? groupId;
   final int? userId;
-
+  final String? teacherName;
   CoursesList({
     this.courseId,
     this.courseName,
     this.email,
     this.groupId,
     this.userId,
+    this.teacherName
   });
 
   factory CoursesList.fromJson(Map<String, dynamic> json) => CoursesList(
     courseId: json["courseId"],
     courseName: json["courseName"],
     email: json["email"],
+    teacherName: json["teacherName"],
     groupId: json["groupId"],
     userId: json["userId"],
   );

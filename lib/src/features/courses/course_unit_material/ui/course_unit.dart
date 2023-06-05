@@ -1,4 +1,12 @@
+import 'dart:io';
+
 import 'package:diploma_mobile/src/features/courses/course_unit_material/data/bloc/unit_material_bloc.dart';
+import 'package:diploma_mobile/src/features/courses/course_unit_material/ui/widget/assignments_material.dart';
+import 'package:diploma_mobile/src/features/courses/course_unit_material/ui/widget/image_material.dart';
+import 'package:diploma_mobile/src/features/courses/course_unit_material/ui/widget/open_question_material.dart';
+import 'package:diploma_mobile/src/features/courses/course_unit_material/ui/widget/pdf_and_other_materials.dart';
+import 'package:diploma_mobile/src/features/courses/course_unit_material/ui/widget/text_material.dart';
+import 'package:diploma_mobile/src/widgets/app_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,17 +14,20 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../../constants/app_assets.dart';
 import '../../../../../constants/app_colors.dart';
 import '../../../../../constants/app_styles.dart';
+import '../data/bloc_material/section_material_bloc.dart';
 
 class CourseUnit extends StatefulWidget {
   const CourseUnit(
       {Key? key,
       required this.unitSectionName,
       required this.courseName,
-      required this.unitId})
+      required this.unitId,
+      required this.courseId})
       : super(key: key);
   final String unitSectionName;
   final String courseName;
   final int unitId;
+  final int courseId;
 
   @override
   State<CourseUnit> createState() => _CourseUnitState();
@@ -26,7 +37,8 @@ class _CourseUnitState extends State<CourseUnit> {
   @override
   void initState() {
     context.read<UnitMaterialBloc>().add(
-          FetchSectionUnitMaterialEvent(unitId: widget.unitId),
+          FetchSectionUnitMaterialEvent(
+              unitId: widget.unitId, courseId: widget.courseId),
         );
     super.initState();
   }
@@ -58,51 +70,63 @@ class _CourseUnitState extends State<CourseUnit> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-          child: Semantics(
-            explicitChildNodes: true,
-            enabled: true,
-            child: BlocBuilder<UnitMaterialBloc, UnitMaterialState>(
-              builder: (context, state) {
-                if (state is UnitMaterialData) {
-                  return DefaultTabController(
-                    length: state.tabs.length,
-                    child: Column(
-                      children: [
-                        TabBar(
-                          isScrollable: true,
-                          indicatorColor: AppColors.accent,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          labelColor: AppColors.primary,
-                          labelStyle: AppStyles.s15w600,
-                          unselectedLabelColor: AppColors.gray600,
-                          tabs: List.generate(
-                            state.tabs.length,
-                            (index) => Text(
-                              state.tabs[index].id.toString() ?? 'no info',
-                            ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Semantics(
+          explicitChildNodes: true,
+          enabled: true,
+          child: BlocBuilder<UnitMaterialBloc, UnitMaterialState>(
+            builder: (context, state) {
+              if (state is UnitMaterialData) {
+                return DefaultTabController(
+                  length: state.tabs.length,
+                  child: Column(
+                    children: [
+                      TabBar(
+                        isScrollable: true,
+                        indicatorColor: AppColors.accent,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        labelColor: AppColors.primary,
+                        labelStyle: AppStyles.s15w600,
+                        unselectedLabelColor: AppColors.gray600,
+                        tabs: List.generate(
+                          state.tabs.length,
+                          (index) => Text(
+                            state.tabs[index].sectionName.toString() ??
+                                'no info',
                           ),
                         ),
-                        // TabBarView(
-                        //   children: [],
-                        // )
-                      ],
-                    ),
-                  );
-                }
-                if (state is UnitMaterialError) {
-                  return Text(state.message);
-                }
-                if (state is UnitMaterialLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
+                      ),
+                      Flexible(
+                        child: TabBarView(
+                          children: [
+                            ...List.generate(
+                              state.tabs.length,
+                              (index) {
+                                return UnitMaterial(
+                                  courseId: widget.courseId,
+                                  unitId: widget.unitId,
+                                  sectionId: state.tabs[index].id ?? 0,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              }
+              if (state is UnitMaterialError) {
+                return Text(state.message);
+              }
+              if (state is UnitMaterialLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ),
       ),
@@ -110,7 +134,101 @@ class _CourseUnitState extends State<CourseUnit> {
   }
 }
 
+class UnitMaterial extends StatefulWidget {
+  const UnitMaterial({
+    Key? key,
+    required this.courseId,
+    required this.unitId,
+    required this.sectionId,
+  }) : super(key: key);
+  final int courseId;
+  final int unitId;
+  final int sectionId;
 
+  @override
+  State<UnitMaterial> createState() => _UnitMaterialState();
+}
+
+class _UnitMaterialState extends State<UnitMaterial> {
+  @override
+  void initState() {
+    context.read<SectionMaterialBloc>().add(
+          FetchSectionMaterialEvent(
+            unitId: widget.unitId,
+            courseId: widget.courseId,
+            sectionId: widget.sectionId,
+          ),
+        );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SectionMaterialBloc, SectionMaterialState>(
+      builder: (context, state) {
+        if (state is SectionMaterialLoading) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is SectionMaterialData) {
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: state.listMaterial.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, int index) {
+                    Widget? widget;
+                    var type = state.listMaterial[index].flagCreationInfo;
+                    switch (type) {
+                      case 'Picture':
+                        widget = ImageMaterial(
+                          image: state.listMaterial[index].fileData ?? '',
+                        );
+                        break;
+                      case 'Pdf and other materials':
+                        widget = PdfAndOtherMaterials(
+                            file: state.listMaterial[index].fileData ?? '');
+                        break;
+                      case 'Open questions':
+                        widget = OpenQuestionMaterial(
+                            question: state.listMaterial[index].question ?? '');
+                        break;
+                      case 'Text':
+                        widget = TextMaterial(
+                          articleHeading:
+                              state.listMaterial[index].articleHeading,
+                          textMarker: state.listMaterial[index].textMarker,
+                          articleText: state.listMaterial[index].articleText,
+                        );
+                        break;
+                      case 'Dividing line':
+                        widget = const AppDivider();
+                        break;
+                    }
+                    return widget ?? const SizedBox.shrink();
+                  },
+                ),
+              ),
+              if (state.assignmentMaterial != null)
+                AssignmentMaterial(
+                  articleHeading: state.assignmentMaterial!.heading ?? '',
+                  dueDate: state.assignmentMaterial!.endDate ?? '',
+                  instructions: state.assignmentMaterial!.instructions ?? '',
+                  material: state.assignmentMaterial!.material ?? '',
+                )
+            ],
+          );
+        }
+        if (state is SectionMaterialError) {
+          return Text(state.message);
+        }
+        return const SizedBox.shrink();
+      },
+    );
+  }
+}
 
 // Column(
 // children: [
@@ -236,135 +354,6 @@ class FirstConstructor extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class LectureInfoContainer extends StatefulWidget {
-  const LectureInfoContainer({Key? key}) : super(key: key);
-
-  @override
-  State<LectureInfoContainer> createState() => _LectureInfoContainerState();
-}
-
-class _LectureInfoContainerState extends State<LectureInfoContainer> {
-  PageController pageController = PageController();
-
-  int getCurrentIndex() {
-    return pageController.page!.round();
-  }
-
-  int currentPage = 1;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 350,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: AppColors.gray200,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(10),
-        color: AppColors.gray200.withOpacity(0.1),
-      ),
-      child: Semantics(
-        explicitChildNodes: true,
-        enabled: true,
-        child: Column(
-          children: [
-            LessonPageBuilder(
-              controller: pageController,
-              imagePath: [
-                ...List.generate(
-                  10,
-                  (index) =>
-                      'https://www.gannett-cdn.com/presto/2021/03/22/NRCD/9d9dd9e4-e84a'
-                      '-402e-ba8f-daa659e6e6c5-PhotoWord_003'
-                      '.JPG?width=1320&height=850&fit=crop&format=pjpg&auto=webp',
-                ),
-              ],
-              valueChanged: (int value) {
-                setState(() {
-                  currentPage = value + 1;
-                });
-              },
-            ),
-            const SizedBox(height: 25),
-            Semantics(
-              explicitChildNodes: true,
-              enabled: true,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Semantics(
-                    button: true,
-                    label: 'Перейти на предыдущую страницу',
-                    child: GestureDetector(
-                      onTap: () {
-                        pageController.previousPage(
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeIn);
-                      },
-                      child: SvgPicture.asset(AppAssets.svg.arrowLeft2),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 31),
-                    child: Text('$currentPage out of 10'),
-                  ),
-                  Semantics(
-                    button: true,
-                    label: 'Перейти на следующую страницу',
-                    child: GestureDetector(
-                      onTap: () {
-                        pageController.nextPage(
-                            duration: const Duration(milliseconds: 400),
-                            curve: Curves.easeIn);
-                      },
-                      child: SvgPicture.asset(AppAssets.svg.arrowRight2),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LessonPageBuilder extends StatelessWidget {
-  const LessonPageBuilder(
-      {Key? key,
-      required this.controller,
-      required this.imagePath,
-      required this.valueChanged})
-      : super(key: key);
-  final PageController controller;
-  final List<String> imagePath;
-  final ValueChanged<int> valueChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: PageView.builder(
-        onPageChanged: valueChanged,
-        controller: controller,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, int index) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              imagePath[index],
-              fit: BoxFit.cover,
-            ),
-          );
-        },
-        itemCount: imagePath.length,
       ),
     );
   }

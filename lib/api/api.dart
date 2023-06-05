@@ -23,7 +23,7 @@ class _BasicInterceptor implements Interceptor {
     options.responseType = ResponseType.json;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWluYXpoZW5pc292YUBnbWFpbC5jb20iLCJleHAiOjE2ODcwMjQ4MDB9.WHKq77JvY5M-fmmV8_qjXtFvHRlRIVLNRi9XgouB3rL2mG6ZH5pEpoMEwKuDIoWjoQaI_vzMn7kmLSd0wdw4bw';
+    var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWluYXpoZW5pc292YUBnbWFpbC5jb20iLCJleHAiOjE2ODcxOTc2MDB9.lzNI8wpg60LEdK4zOTZaB3v_P477BtSMdOwuT-prOvadwJE7cyS9Kua7v_yTR3VYlumhAL_BdzNQaT22c_txNA';
     options.headers = {
       "Accept": "application/json",
       "Authorization": "Bearer $token"

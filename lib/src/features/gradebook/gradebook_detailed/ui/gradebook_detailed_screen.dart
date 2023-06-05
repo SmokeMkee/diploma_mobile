@@ -138,7 +138,8 @@ class _GradeBookDetailedScreenState extends State<GradeBookDetailedScreen> {
                           itemBuilder: (context, int index) {
                             return GradeCard(
                               grade: list?[index].grade ?? 'no info',
-                              assignmentName: 'Test',
+                              assignmentName:
+                                  list?[index].sectionName ?? 'no info', status: list?[index].status ?? 'no info',
                             );
                           },
                         );
@@ -288,10 +289,15 @@ class FeedbackCard extends StatelessWidget {
 }
 
 class GradeCard extends StatelessWidget {
-  const GradeCard({Key? key, required this.grade, required this.assignmentName})
+  const GradeCard(
+      {Key? key,
+      required this.grade,
+      required this.assignmentName,
+      required this.status})
       : super(key: key);
   final String grade;
   final String assignmentName;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -318,7 +324,7 @@ class GradeCard extends StatelessWidget {
                     style: AppStyles.s15w600,
                   ),
                   Text(
-                    'Submitted',
+                    status,
                     style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
                   )
                 ],

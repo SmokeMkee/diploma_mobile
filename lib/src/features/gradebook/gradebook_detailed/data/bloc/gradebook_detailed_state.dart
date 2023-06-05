@@ -15,5 +15,5 @@ class GradebookDetailedError extends GradebookDetailedState {
 class GradebookDetailedData extends GradebookDetailedState {
   GradebookDetailedData({required this.listGradeBook});
 
-  final GradeBook listGradeBook;
+  final Grades listGradeBook;
 }

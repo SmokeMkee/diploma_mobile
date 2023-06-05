@@ -84,18 +84,19 @@ class CoursesDetailedScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => CourseUnit(
-                                      unitSectionName:
-                                          state.listUnits[index].id.toString() ??
-                                              'No Info',
+                                      unitSectionName: state.listUnits[index].unitName ??
+                                          'No Info',
                                       courseName: courseName,
                                       unitId: state.listUnits[index].id ?? 0,
+                                      courseId: courseId,
                                     ),
                                   ),
                                 ),
                                 child: CoursesDetailedCard(
                                   index: index,
-                                  unitName: state.listUnits[index].id.toString() ??
-                                      'No Info',
+                                  unitName:
+                                      state.listUnits[index].unitName ??
+                                          'No Info',
                                 ),
                               ),
                             );

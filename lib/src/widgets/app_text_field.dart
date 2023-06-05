@@ -7,17 +7,19 @@ class AppTextField extends StatelessWidget {
     Key? key,
     required this.hintText,
     this.onChanged,
-    required this.controller,
+     this.controller, this.suffixIcon,
   }) : super(key: key);
   final String hintText;
   final Function(String?)? onChanged;
-  final TextEditingController controller;
-
+  final TextEditingController? controller;
+  final Widget? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return TextField(
       onChanged: onChanged,
+
       decoration: InputDecoration(
+        suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(

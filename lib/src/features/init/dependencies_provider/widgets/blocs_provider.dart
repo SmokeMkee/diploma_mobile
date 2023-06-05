@@ -6,6 +6,9 @@ import 'package:diploma_mobile/src/features/courses/courses_detailed/data/repo/r
 import 'package:diploma_mobile/src/features/gradebook/data/repo/repo_gradebook.dart';
 import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/bloc/gradebook_detailed_bloc.dart';
 import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/repo/repo_gradebook_detailed.dart';
+import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/bloc/create_resume_bloc.dart';
+import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/repo/repo_create_resume.dart';
+import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/view_model/create_model.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/data/bloc/resume_bloc.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/data/repo/repo_resume.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,7 @@ import 'package:provider/provider.dart';
 
 import '../../../assignments/data/bloc/assignments_bloc.dart';
 import '../../../assignments/data/repo/repo_assignment.dart';
+import '../../../courses/course_unit_material/data/bloc_material/section_material_bloc.dart';
 import '../../../courses/course_unit_material/data/repo/repo_unit_material.dart';
 import '../../../courses/data/bloc/courses_bloc.dart';
 import '../../../courses/data/repo/repo_courses.dart';
@@ -85,6 +89,19 @@ class BlocsProvider extends StatelessWidget {
             repo: RepositoryProvider.of<RepoResume>(context),
           )..add(FetchResumeEvent()),
         ),
+        BlocProvider<CreateResumeBloc>(
+          create: (context) => CreateResumeBloc(
+            repo: RepositoryProvider.of<RepoCreateResume>(context),
+          ),
+        ),
+        BlocProvider<SectionMaterialBloc>(
+          create: (context) => SectionMaterialBloc(
+            repo: RepositoryProvider.of<RepoUnitMaterial>(context),
+          ),
+        ),
+        ChangeNotifierProvider<CreateModel>(
+          create: (context) => CreateModel(),
+        )
         // ChangeNotifierProvider<ThemeManager>(
         //   create: (context) => ThemeManager(),
         // ),

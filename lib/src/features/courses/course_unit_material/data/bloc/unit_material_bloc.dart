@@ -17,7 +17,7 @@ class UnitMaterialBloc extends Bloc<UnitMaterialEvent, UnitMaterialState> {
       (event, emit) async {
         emit(UnitMaterialLoading());
         try {
-          final response = await repo.fetch(event.unitId);
+          final response = await repo.fetch(event.unitId, event.courseId);
           emit(UnitMaterialData(tabs: response));
         } catch (e) {
           emit(UnitMaterialError(message: 'error fetch tabs'));

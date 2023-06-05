@@ -9,6 +9,7 @@ class _Images {
   final String logo = 'assets/images/logo.png';
   final String profile = 'assets/images/img.png';
   final String diagram = 'assets/images/img_1.png';
+  final String camera = 'assets/images/camera.png';
 }
 
 class _Svg {
@@ -61,4 +62,7 @@ class _Svg {
   final String lightBulb = 'assets/svg/light_bulb.svg';
   final String indicator = 'assets/svg/indicator.svg';
   final String time = 'assets/svg/time.svg';
+  final String camera = 'assets/svg/camera.svg';
+
+
 }

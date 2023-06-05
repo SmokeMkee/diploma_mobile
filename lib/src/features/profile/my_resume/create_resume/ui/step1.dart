@@ -1,8 +1,10 @@
 import 'package:diploma_mobile/constants/app_styles.dart';
 import 'package:diploma_mobile/src/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../../constants/app_colors.dart';
+import '../data/view_model/create_model.dart';
 
 class Step1 extends StatefulWidget {
   const Step1({Key? key}) : super(key: key);
@@ -35,50 +37,79 @@ class _Step1State extends State<Step1> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text(
-          'Contact details',
-          style: AppStyles.s20w600,
-        ),
-        TextFieldTile(
-          title: 'First name',
-          controller: firstNameController,
-        ),
-        TextFieldTile(
-          title: 'Second name',
-          controller: secondNameController,
-        ),
-        TextFieldTile(
-          title: 'Patronymic name',
-          controller: patronymicNameController,
-        ),
-        TextFieldTile(
-          title: 'Cellphone',
-          controller: cellPhoneController,
-        ),
-        TextFieldTile(
-          title: 'Date of birth',
-          controller: firstNameController,
-        ),
-        GenderTile(
-          title: 'Gender',
-          onSelect: (value) {},
-        ),
-        SizedBox(height: 20),
-        TextFieldTile(
-          title: 'Citizenship',
-          controller: firstNameController,
-        ),
-        TextFieldTile(
-          title: 'City of residence',
-          controller: firstNameController,
-        ),
-        TextFieldTile(
-          title: 'Work experience',
-          controller: firstNameController,
-        ),
-      ],
+    var vm = context.read<CreateModel>();
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Contact details',
+            style: AppStyles.s20w600,
+          ),
+          TextFieldTile(
+            title: 'First name',
+            controller: firstNameController,
+            onChanged: (value) {
+              vm.resume.firstName = value;
+            },
+          ),
+          TextFieldTile(
+            title: 'Second name',
+            controller: secondNameController,
+            onChanged: (value) {
+              vm.resume.secondName = value;
+            },
+          ),
+          TextFieldTile(
+            title: 'Patronymic name',
+            controller: patronymicNameController,
+            onChanged: (value) {
+              vm.resume.patronymicName = value;
+            },
+          ),
+          TextFieldTile(
+            title: 'Cellphone',
+            controller: cellPhoneController,
+            onChanged: (value) {
+              vm.resume.cellPhone = value;
+            },
+          ),
+          TextFieldTile(
+            title: 'Date of birth',
+            controller: dateOfBirthController,
+            onChanged: (value) {
+              vm.resume.birthDate = value;
+            },
+          ),
+          GenderTile(
+            title: 'Gender',
+            onSelect: (value) {},
+          ),
+          const SizedBox(height: 20),
+          TextFieldTile(
+            title: 'Citizenship',
+            controller: citizenshipController,
+            onChanged: (value) {
+              vm.resume.citizenship = value;
+            },
+          ),
+          TextFieldTile(
+            title: 'City of residence',
+            controller: cityOfResidenceController,
+            onChanged: (value) {
+              vm.resume.cityOfResidence = value;
+            },
+          ),
+          TextFieldTile(
+            title: 'Work experience',
+            controller: workExperienceController,
+            onChanged: (value) {
+              vm.resume.workExperience = value;
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -150,10 +181,17 @@ class _GenderTileState extends State<GenderTile> {
 }
 
 class TextFieldTile extends StatelessWidget {
-  const TextFieldTile({Key? key, required this.title, required this.controller})
+  const TextFieldTile(
+      {Key? key,
+      required this.title,
+      required this.controller,
+      this.suffixIcon,
+      required this.onChanged})
       : super(key: key);
   final String title;
   final TextEditingController controller;
+  final Widget? suffixIcon;
+  final Function(String?) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -168,6 +206,8 @@ class TextFieldTile extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         AppTextField(
+          onChanged: onChanged,
+          suffixIcon: suffixIcon,
           hintText: title,
           controller: controller,
         ),

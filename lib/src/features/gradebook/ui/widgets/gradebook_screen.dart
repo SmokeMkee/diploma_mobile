@@ -63,8 +63,12 @@ class GradeBookScreen extends StatelessWidget {
                                         courseId: state.listGradeBook[index]
                                                 .courseId ??
                                             0,
-                                        teacherName: state.listGradeBook[index].email ?? 'no info',
-                                        courseName: state.listGradeBook[index].courseName ?? 'no info',
+                                        teacherName: state.listGradeBook[index]
+                                                .teacherName ??
+                                            'no info',
+                                        courseName: state.listGradeBook[index]
+                                                .courseName ??
+                                            'no info',
                                       ),
                                     ),
                                   );
@@ -74,7 +78,7 @@ class GradeBookScreen extends StatelessWidget {
                                       state.listGradeBook[index].courseName ??
                                           'no info',
                                   teacherName:
-                                      state.listGradeBook[index].email ??
+                                      state.listGradeBook[index].teacherName ??
                                           'no info',
                                 ),
                               ),

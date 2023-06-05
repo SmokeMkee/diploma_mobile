@@ -14,14 +14,10 @@ class AssignmentsBloc extends Bloc<AssignmentsEvent, AssignmentsState> {
   AssignmentsBloc({required this.repo}) : super(AssignmentsInitial()) {
     on<FetchAssignmentsEvent>(
       (event, emit) async {
-        print(1);
         emit(AssignmentsLoading());
-        print(2);
         try {
           final response = await repo.fetch();
-          print(3);
           emit(AssignmentsData(listAssignments: response));
-          print(4);
         } catch (e) {
           if(e is DioError){
             print(e.response);

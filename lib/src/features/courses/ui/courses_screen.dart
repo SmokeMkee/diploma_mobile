@@ -81,16 +81,16 @@ class CoursesScreen extends StatelessWidget {
                                           'No Info',
                                   courseId:
                                       state.listCourses[index].courseId ?? 0,
-                                  teacherName: state.listCourses[index].email ??
+                                  teacherName: state.listCourses[index].teacherName ??
                                       'No Info',
                                 ),
                               ),
                             );
                           },
                           child: CoursesCard(
-                            courseName: state.listCourses[index].courseId.toString() + ' dsadsa' ?? 'no info',
+                            courseName: state.listCourses[index].courseName ?? 'no info',
                             teacherName:
-                                state.listCourses[index].email ?? 'No Info',
+                                state.listCourses[index].teacherName ?? 'No Info',
                           ),
                         );
                       },
