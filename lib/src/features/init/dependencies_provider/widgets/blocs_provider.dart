@@ -11,6 +11,8 @@ import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data
 import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/view_model/create_model.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/data/bloc/resume_bloc.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/data/repo/repo_resume.dart';
+import 'package:diploma_mobile/src/features/schedule/data/bloc/schedule_bloc.dart';
+import 'package:diploma_mobile/src/features/schedule/data/repo/repo_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -101,10 +103,15 @@ class BlocsProvider extends StatelessWidget {
         ),
         ChangeNotifierProvider<CreateModel>(
           create: (context) => CreateModel(),
-        )
+        ),
         // ChangeNotifierProvider<ThemeManager>(
         //   create: (context) => ThemeManager(),
         // ),
+        BlocProvider<ScheduleBloc>(
+          create: (context) => ScheduleBloc(
+            repo: RepositoryProvider.of<RepoSchedule>(context),
+          ),
+        ),
       ],
       child: child,
     );

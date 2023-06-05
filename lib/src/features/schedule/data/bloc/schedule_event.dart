@@ -1,4 +1,9 @@
 part of 'schedule_bloc.dart';
 
-@immutable
 abstract class ScheduleEvent {}
+
+class FetchScheduleEvent extends ScheduleEvent {
+  final String day;
+
+  FetchScheduleEvent({required this.day});
+}

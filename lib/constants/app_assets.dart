@@ -63,6 +63,6 @@ class _Svg {
   final String indicator = 'assets/svg/indicator.svg';
   final String time = 'assets/svg/time.svg';
   final String camera = 'assets/svg/camera.svg';
-
+  final String emptySchedule = 'assets/svg/empty_schedule.svg';
 
 }

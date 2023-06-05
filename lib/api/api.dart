@@ -21,7 +21,7 @@ class _BasicInterceptor implements Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     options.contentType = 'application/json; charset=utf-8';
     options.responseType = ResponseType.json;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWluYXpoZW5pc292YUBnbWFpbC5jb20iLCJleHAiOjE2ODcxOTc2MDB9.lzNI8wpg60LEdK4zOTZaB3v_P477BtSMdOwuT-prOvadwJE7cyS9Kua7v_yTR3VYlumhAL_BdzNQaT22c_txNA';
     options.headers = {

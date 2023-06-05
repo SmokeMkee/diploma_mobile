@@ -23,7 +23,7 @@ dependencies:
   #file_picker: ^5.3.2
   table_calendar: ^3.0.8
   flutter_bloc: ^8.1.1
-  intl: ^0.18.0
+  intl: ^0.17.0
   auto_route: ^5.0.3
   equatable: ^2.0.5
   flutter_svg: ^1.1.6

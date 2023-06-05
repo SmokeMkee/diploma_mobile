@@ -5,6 +5,7 @@ import 'package:diploma_mobile/src/features/gradebook/data/repo/repo_gradebook.d
 import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/repo/repo_gradebook_detailed.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/repo/repo_create_resume.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/data/repo/repo_resume.dart';
+import 'package:diploma_mobile/src/features/schedule/data/repo/repo_schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -69,6 +70,11 @@ class ReposProvider extends StatelessWidget {
         ),
         Provider(
           create: (context) => RepoCreateResume(
+            api: RepositoryProvider.of<Api>(context),
+          ),
+        ),
+        Provider(
+          create: (context) => RepoSchedule(
             api: RepositoryProvider.of<Api>(context),
           ),
         ),
