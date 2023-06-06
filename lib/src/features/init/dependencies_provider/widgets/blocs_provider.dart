@@ -6,6 +6,7 @@ import 'package:diploma_mobile/src/features/courses/courses_detailed/data/repo/r
 import 'package:diploma_mobile/src/features/gradebook/data/repo/repo_gradebook.dart';
 import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/bloc/gradebook_detailed_bloc.dart';
 import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/repo/repo_gradebook_detailed.dart';
+import 'package:diploma_mobile/src/features/profile/data/repo/repo_profile.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/bloc/create_resume_bloc.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/repo/repo_create_resume.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/view_model/create_model.dart';
@@ -24,6 +25,7 @@ import '../../../courses/course_unit_material/data/repo/repo_unit_material.dart'
 import '../../../courses/data/bloc/courses_bloc.dart';
 import '../../../courses/data/repo/repo_courses.dart';
 import '../../../gradebook/data/bloc/gradebook_bloc.dart';
+import '../../../profile/data/bloc/profile_bloc.dart';
 
 class BlocsProvider extends StatelessWidget {
   const BlocsProvider({super.key, required this.child});
@@ -111,6 +113,11 @@ class BlocsProvider extends StatelessWidget {
           create: (context) => ScheduleBloc(
             repo: RepositoryProvider.of<RepoSchedule>(context),
           ),
+        ),
+        BlocProvider<ProfileBloc>(
+          create: (context) => ProfileBloc(
+            repo: RepositoryProvider.of<RepoProfile>(context),
+          )..add(FetchProfileEvent()),
         ),
       ],
       child: child,

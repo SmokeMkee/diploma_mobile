@@ -3,7 +3,9 @@ import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/ui/grad
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../constants/app_assets.dart';
 import '../../../../../constants/app_colors.dart';
+import '../../../../widgets/empty_widget.dart';
 import '../../../courses/ui/courses_screen.dart';
 import '../../data/bloc/gradebook_bloc.dart';
 
@@ -43,50 +45,62 @@ class GradeBookScreen extends StatelessWidget {
                     );
                   }
                   if (state is GradebookData) {
-                    return Expanded(
-                      child: Semantics(
-                        explicitChildNodes: true,
-                        enabled: true,
-                        child: ListView.builder(
-                          itemCount: state.listGradeBook.length,
-                          itemBuilder: (context, int index) {
-                            return Semantics(
-                              button: true,
-                              label: 'Какая то страница',
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          GradeBookDetailedScreen(
-                                        courseId: state.listGradeBook[index]
-                                                .courseId ??
-                                            0,
-                                        teacherName: state.listGradeBook[index]
-                                                .teacherName ??
-                                            'no info',
+                    return state.listGradeBook.isEmpty
+                        ? Expanded(
+                            child: AppEmptyWidget(
+                              header: 'You don\'t have any grades yet',
+                              svgPath: AppAssets.svg.emptyGradebook,
+                              subTitle:
+                                  'Looks like you don\'t have any courses added yet, please wait while your teacher adds you',
+                            ),
+                          )
+                        : Expanded(
+                            child: Semantics(
+                              explicitChildNodes: true,
+                              enabled: true,
+                              child: ListView.builder(
+                                itemCount: state.listGradeBook.length,
+                                itemBuilder: (context, int index) {
+                                  return Semantics(
+                                    button: true,
+                                    label: 'Какая то страница',
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                GradeBookDetailedScreen(
+                                              courseId: state
+                                                      .listGradeBook[index]
+                                                      .courseId ??
+                                                  0,
+                                              teacherName: state
+                                                      .listGradeBook[index]
+                                                      .teacherName ??
+                                                  'no info',
+                                              courseName: state
+                                                      .listGradeBook[index]
+                                                      .courseName ??
+                                                  'no info',
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: CoursesCard(
                                         courseName: state.listGradeBook[index]
                                                 .courseName ??
+                                            'no info',
+                                        teacherName: state.listGradeBook[index]
+                                                .teacherName ??
                                             'no info',
                                       ),
                                     ),
                                   );
                                 },
-                                child: CoursesCard(
-                                  courseName:
-                                      state.listGradeBook[index].courseName ??
-                                          'no info',
-                                  teacherName:
-                                      state.listGradeBook[index].teacherName ??
-                                          'no info',
-                                ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
-                    );
+                            ),
+                          );
                   }
                   return const SizedBox.shrink();
                 },

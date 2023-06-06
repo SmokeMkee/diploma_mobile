@@ -238,15 +238,17 @@ class _ScheduleListState extends State<ScheduleList> {
             );
           }
           if (state is ScheduleData) {
-            return state.scheduleList.isEmpty ? EmptyWidget() :  ListView.builder(
-              itemBuilder: (context, int index) {
-                return ScheduleCard(
-                  schedule: state.scheduleList[index],
-                );
-              },
-              shrinkWrap: true,
-              itemCount: state.scheduleList.length,
-            );
+            return state.scheduleList.isEmpty
+                ? EmptyWidget()
+                : ListView.builder(
+                    itemBuilder: (context, int index) {
+                      return ScheduleCard(
+                        schedule: state.scheduleList[index],
+                      );
+                    },
+                    shrinkWrap: true,
+                    itemCount: state.scheduleList.length,
+                  );
           }
 
           return const SizedBox.shrink();

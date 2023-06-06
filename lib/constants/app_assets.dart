@@ -64,5 +64,12 @@ class _Svg {
   final String time = 'assets/svg/time.svg';
   final String camera = 'assets/svg/camera.svg';
   final String emptySchedule = 'assets/svg/empty_schedule.svg';
+  final String emptyAssignments = 'assets/svg/assignmnets_empty.svg';
+  final String emptyCourses = 'assets/svg/courses_empty.svg';
+  final String emptyGradebook = 'assets/svg/gradebook_emty.svg';
+  final String emptyGrades = 'assets/svg/grades_empty.svg';
+  final String emptyUnit = 'assets/svg/unit_empty.svg';
+  final String emptyResume = 'assets/svg/resume_empty.svg';
+  final String emptyUnitMaterial = 'assets/svg/unit_material_empty.svg';
 
 }

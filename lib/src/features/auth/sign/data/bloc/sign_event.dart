@@ -11,3 +11,4 @@ class AuthSignEvent extends SignEvent {
   final String email;
   final String password;
 }
+class LogOutSignEvent extends SignEvent {}

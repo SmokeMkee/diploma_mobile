@@ -2,6 +2,8 @@ import 'package:diploma_mobile/constants/app_assets.dart';
 import 'package:diploma_mobile/constants/app_colors.dart';
 import 'package:diploma_mobile/constants/app_styles.dart';
 import 'package:diploma_mobile/src/features/courses/courses_detailed/ui/courses_detailed_screen.dart';
+import 'package:diploma_mobile/src/features/profile/data/bloc/profile_bloc.dart';
+import 'package:diploma_mobile/src/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,8 +19,19 @@ class Courses {
   final String teacherName;
 }
 
-class CoursesScreen extends StatelessWidget {
+class CoursesScreen extends StatefulWidget {
   const CoursesScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CoursesScreen> createState() => _CoursesScreenState();
+}
+
+class _CoursesScreenState extends State<CoursesScreen> {
+  @override
+  void initState() {
+    context.read<CoursesBloc>().add(FetchCoursesEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +39,26 @@ class CoursesScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppColors.white,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: CircleAvatar(
-              radius: 23,
-              backgroundColor: AppColors.gray600.withOpacity(0.1),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NotificationScreen(),
-                    ),
-                  );
-                },
-                icon: SvgPicture.asset(AppAssets.svg.notification),
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 15),
+        //     child: CircleAvatar(
+        //       radius: 23,
+        //       backgroundColor: AppColors.gray600.withOpacity(0.1),
+        //       child: IconButton(
+        //         onPressed: () {
+        //           Navigator.push(
+        //             context,
+        //             MaterialPageRoute(
+        //               builder: (context) => const NotificationScreen(),
+        //             ),
+        //           );
+        //         },
+        //         icon: SvgPicture.asset(AppAssets.svg.notification),
+        //       ),
+        //     ),
+        //   )
+        // ],
         title: const AppBarTitleWidget(),
       ),
       body: Padding(
@@ -60,42 +73,57 @@ class CoursesScreen extends StatelessWidget {
             BlocBuilder<CoursesBloc, CoursesState>(
               builder: (context, state) {
                 if (state is CoursesData) {
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: state.listCourses.length,
-                      itemBuilder: (context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            context.read<CoursesUnitsBloc>().add(
-                                  FetchCoursesUnitsEvent(
-                                    courseId:
-                                        state.listCourses[index].courseId ?? 0
-                                  ),
-                                );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CoursesDetailedScreen(
+                  return state.listCourses.isEmpty
+                      ? Expanded(
+                          child: AppEmptyWidget(
+                            header: 'You don’t have any courses yet',
+                            svgPath: AppAssets.svg.emptyCourses,
+                            subTitle:
+                                'It looks like you don\'t have any courses yet, please wait until your teacher adds you',
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: state.listCourses.length,
+                            itemBuilder: (context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  context.read<CoursesUnitsBloc>().add(
+                                        FetchCoursesUnitsEvent(
+                                            courseId: state.listCourses[index]
+                                                    .courseId ??
+                                                0),
+                                      );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          CoursesDetailedScreen(
+                                        courseName: state.listCourses[index]
+                                                .courseName ??
+                                            'No Info',
+                                        courseId:
+                                            state.listCourses[index].courseId ??
+                                                0,
+                                        teacherName: state.listCourses[index]
+                                                .teacherName ??
+                                            'No Info',
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: CoursesCard(
                                   courseName:
                                       state.listCourses[index].courseName ??
+                                          'no info',
+                                  teacherName:
+                                      state.listCourses[index].teacherName ??
                                           'No Info',
-                                  courseId:
-                                      state.listCourses[index].courseId ?? 0,
-                                  teacherName: state.listCourses[index].teacherName ??
-                                      'No Info',
                                 ),
-                              ),
-                            );
-                          },
-                          child: CoursesCard(
-                            courseName: state.listCourses[index].courseName ?? 'no info',
-                            teacherName:
-                                state.listCourses[index].teacherName ?? 'No Info',
+                              );
+                            },
                           ),
                         );
-                      },
-                    ),
-                  );
                 }
                 if (state is CoursesLoading) {
                   return const Center(child: CircularProgressIndicator());
@@ -247,8 +275,8 @@ class AppBarTitleWidget extends StatelessWidget {
               'Hello',
               style: AppStyles.s14w500.copyWith(color: AppColors.gray600),
             ),
-            const Text(
-              'Bayan Buitek',
+            Text(
+              context.watch<ProfileBloc>().profileInfo?.fullName ?? 'no name',
               style: AppStyles.s18w500,
             ),
           ],

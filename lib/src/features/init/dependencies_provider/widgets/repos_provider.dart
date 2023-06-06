@@ -3,6 +3,7 @@ import 'package:diploma_mobile/src/features/courses/course_unit_material/data/re
 import 'package:diploma_mobile/src/features/courses/courses_detailed/data/repo/repo_units.dart';
 import 'package:diploma_mobile/src/features/gradebook/data/repo/repo_gradebook.dart';
 import 'package:diploma_mobile/src/features/gradebook/gradebook_detailed/data/repo/repo_gradebook_detailed.dart';
+import 'package:diploma_mobile/src/features/profile/data/repo/repo_profile.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/create_resume/data/repo/repo_create_resume.dart';
 import 'package:diploma_mobile/src/features/profile/my_resume/data/repo/repo_resume.dart';
 import 'package:diploma_mobile/src/features/schedule/data/repo/repo_schedule.dart';
@@ -75,6 +76,10 @@ class ReposProvider extends StatelessWidget {
         ),
         Provider(
           create: (context) => RepoSchedule(
+            api: RepositoryProvider.of<Api>(context),
+          ),
+        ),Provider(
+          create: (context) => RepoProfile(
             api: RepositoryProvider.of<Api>(context),
           ),
         ),

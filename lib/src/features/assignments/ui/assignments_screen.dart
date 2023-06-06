@@ -1,4 +1,5 @@
 import 'package:diploma_mobile/constants/app_assets.dart';
+import 'package:diploma_mobile/src/widgets/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,128 +15,112 @@ class AssignmentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          iconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
-          backgroundColor: AppColors.white,
-          centerTitle: true,
-          leading: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: CircleAvatar(
-              radius: 3,
-              backgroundColor: AppColors.gray600.withOpacity(0.1),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SavedScreen(),
-                    ),
-                  );
-                },
-                icon: SvgPicture.asset(AppAssets.svg.saved),
-              ),
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CircleAvatar(
-                radius: 23,
-                backgroundColor: AppColors.gray600.withOpacity(0.1),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: SvgPicture.asset(AppAssets.svg.filter),
-                ),
-              ),
-            ),
-          ],
-          title: Semantics(
-            explicitChildNodes: true,
-            enabled: true,
-            child: Column(
-              children: const [
-                Text(
-                  'Assignments',
-                  style: AppStyles.s15w600,
-                ),
-              ],
-            ),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        iconTheme: const IconThemeData(
+          color: Colors.black,
         ),
-        body: Semantics(
+        backgroundColor: AppColors.white,
+        centerTitle: true,
+        // leading: Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 5),
+        //   child: CircleAvatar(
+        //     radius: 3,
+        //     backgroundColor: AppColors.gray600.withOpacity(0.1),
+        //     child: IconButton(
+        //       onPressed: () {
+        //         Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //             builder: (context) => const SavedScreen(),
+        //           ),
+        //         );
+        //       },
+        //       icon: SvgPicture.asset(AppAssets.svg.saved),
+        //     ),
+        //   ),
+        // ),
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 15),
+        //     child: CircleAvatar(
+        //       radius: 23,
+        //       backgroundColor: AppColors.gray600.withOpacity(0.1),
+        //       child: IconButton(
+        //         onPressed: () {},
+        //         icon: SvgPicture.asset(AppAssets.svg.filter),
+        //       ),
+        //     ),
+        //   ),
+        // ],
+        title: Semantics(
           explicitChildNodes: true,
           enabled: true,
-          child: Column(
+          child:  Column(
             children: [
-              const TabBar(
-                isScrollable: true,
-                indicatorColor: AppColors.accent,
-                indicatorSize: TabBarIndicatorSize.label,
-                labelColor: AppColors.primary,
-                labelStyle: AppStyles.s15w600,
-                unselectedLabelColor: AppColors.gray600,
-                tabs: [
-                  Text('All assignments'),
-                  Text('Assigned'),
-                  Text('Past due')
-                ],
+              Text(
+                'Assignments',
+                style: AppStyles.s15w600,
               ),
-              Container(
-                height: 1,
-                width: double.infinity,
-                color: AppColors.gray200,
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    BlocBuilder<AssignmentsBloc, AssignmentsState>(
-                      builder: (context, state) {
-                        if (state is AssignmentsLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (state is AssignmentsError) {
-                          return Center(
-                            child: Text(state.message),
-                          );
-                        }
-                        if (state is AssignmentsData) {
-                          return state.listAssignments.isEmpty
-                              ? const Center(
-                                  child: Text('Assignments empty'),
-                                )
-                              : ListView.builder(
-                                  itemBuilder: (context, int index) {
-                                    return AssignmentsCard(
-                                      assignmentName: state
-                                              .listAssignments[index].heading ??
-                                          '0',
-                                      courseName: state.listAssignments[index]
-                                          .instructions ?? 'sd',
-                                      date: state.listAssignments[index]
-                                              .startDate ??
-                                          DateTime.now().toString(),
-                                    );
-                                  },
-                                  shrinkWrap: true,
-                                  itemCount: state.listAssignments.length,
-                                );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
+        ),
+      ),
+      body: Semantics(
+        explicitChildNodes: true,
+        enabled: true,
+        child: Column(
+          children: [
+            Container(
+              height: 1,
+              width: double.infinity,
+              color: AppColors.gray200,
+            ),
+            Expanded(
+              child: BlocBuilder<AssignmentsBloc, AssignmentsState>(
+                builder: (context, state) {
+                  if (state is AssignmentsLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (state is AssignmentsError) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  }
+                  if (state is AssignmentsData) {
+                    return state.listAssignments.isEmpty
+                        ? Expanded(
+                            child: AppEmptyWidget(
+                              header: 'You don\'t have an assignment yet',
+                              svgPath: AppAssets.svg.emptyAssignments,
+                              subTitle:
+                                  'Looks like you don\'t have saved educational materials from courses yet',
+                            ),
+                          )
+                        : ListView.builder(
+                            itemBuilder: (context, int index) {
+                              return AssignmentsCard(
+                                assignmentName:
+                                    state.listAssignments[index].heading ?? '0',
+                                courseName:
+                                    state.listAssignments[index].instructions ??
+                                        'sd',
+                                date: state.listAssignments[index].startDate ??
+                                    DateTime.now().toString(),
+                              );
+                            },
+                            shrinkWrap: true,
+                            itemCount: state.listAssignments.length,
+                          );
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            )
+          ],
         ),
       ),
     );

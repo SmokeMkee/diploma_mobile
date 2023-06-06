@@ -19,10 +19,11 @@ part 'app_router.gr.dart';
   routes: <AutoRoute>[
     AutoRoute(
       page: AuthScreen,
+      initial: true,
     ),
     CustomRoute(
       page: PrimaryScreen,
-      initial: true,
+
       durationInMilliseconds: 500,
       children: [
         AutoRoute(

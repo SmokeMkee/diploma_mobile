@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../constants/app_colors.dart';
+import '../../../../widgets/empty_widget.dart';
 
 class GradeBookDetailedScreen extends StatefulWidget {
   const GradeBookDetailedScreen(
@@ -72,6 +73,11 @@ class _GradeBookDetailedScreenState extends State<GradeBookDetailedScreen> {
               const SizedBox(height: 20),
               BlocBuilder<GradebookDetailedBloc, GradebookDetailedState>(
                 builder: (context, state) {
+                  if (state is GradebookDetailedLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                   if (state is GradebookDetailedData) {
                     return Container(
                       padding: const EdgeInsets.symmetric(
@@ -131,18 +137,36 @@ class _GradeBookDetailedScreenState extends State<GradeBookDetailedScreen> {
                   child: BlocBuilder<GradebookDetailedBloc,
                       GradebookDetailedState>(
                     builder: (context, state) {
+                      if (state is GradebookDetailedLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
                       if (state is GradebookDetailedData) {
                         var list = state.listGradeBook.studentGradeBookDtoList;
-                        return ListView.builder(
-                          itemCount: list?.length ?? 0,
-                          itemBuilder: (context, int index) {
-                            return GradeCard(
-                              grade: list?[index].grade ?? 'no info',
-                              assignmentName:
-                                  list?[index].sectionName ?? 'no info', status: list?[index].status ?? 'no info',
-                            );
-                          },
-                        );
+                        return state.listGradeBook.studentGradeBookDtoList ==
+                                    null ||
+                                state.listGradeBook.studentGradeBookDtoList!
+                                    .isEmpty
+                            ? Expanded(
+                                child: AppEmptyWidget(
+                                  header: 'It\'s empty here',
+                                  svgPath: AppAssets.svg.emptyGrades,
+                                  subTitle:
+                                      'When your grades and attendance are posted, it will appear here!',
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: list?.length ?? 0,
+                                itemBuilder: (context, int index) {
+                                  return GradeCard(
+                                    grade: list?[index].grade ?? 'no info',
+                                    assignmentName:
+                                        list?[index].sectionName ?? 'no info',
+                                    status: list?[index].status ?? 'no info',
+                                  );
+                                },
+                              );
                       }
                       if (state is GradebookDetailedInitial) {
                         return const Center(

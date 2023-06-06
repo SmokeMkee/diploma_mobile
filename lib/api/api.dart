@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Api {
@@ -11,6 +12,8 @@ class Api {
 }
 
 class _BasicInterceptor implements Interceptor {
+  final storage = const FlutterSecureStorage();
+
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     handler.next(err);
@@ -21,9 +24,7 @@ class _BasicInterceptor implements Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     options.contentType = 'application/json; charset=utf-8';
     options.responseType = ResponseType.json;
-    // final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWluYXpoZW5pc292YUBnbWFpbC5jb20iLCJleHAiOjE2ODcxOTc2MDB9.lzNI8wpg60LEdK4zOTZaB3v_P477BtSMdOwuT-prOvadwJE7cyS9Kua7v_yTR3VYlumhAL_BdzNQaT22c_txNA';
+    String? token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWluYXpoZW5pc292YUBnbWFpbC5jb20iLCJleHAiOjE2ODcyODQwMDB9.FhAyezPfIQbnUyGZAqB8WsWV6jUTlKKePnLTKHpGTBQLUcwsVH3MLAIbwYpwzevRYGeVyAAFN54rqyf1U6QmQw';
     options.headers = {
       "Accept": "application/json",
       "Authorization": "Bearer $token"

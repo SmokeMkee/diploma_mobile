@@ -98,11 +98,11 @@ class _$AppRouter extends RootStackRouter {
   List<RouteConfig> get routes => [
         RouteConfig(
           AuthScreenRoute.name,
-          path: '/auth-screen',
+          path: '/',
         ),
         RouteConfig(
           PrimaryScreenRoute.name,
-          path: '/',
+          path: '/primary-screen',
           children: [
             RouteConfig(
               CoursesRouter.name,
@@ -175,7 +175,7 @@ class AuthScreenRoute extends PageRouteInfo<void> {
   const AuthScreenRoute()
       : super(
           AuthScreenRoute.name,
-          path: '/auth-screen',
+          path: '/',
         );
 
   static const String name = 'AuthScreenRoute';
@@ -187,7 +187,7 @@ class PrimaryScreenRoute extends PageRouteInfo<void> {
   const PrimaryScreenRoute({List<PageRouteInfo>? children})
       : super(
           PrimaryScreenRoute.name,
-          path: '/',
+          path: '/primary-screen',
           initialChildren: children,
         );
 

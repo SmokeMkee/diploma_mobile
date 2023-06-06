@@ -1,9 +1,14 @@
 import 'package:diploma_mobile/constants/app_assets.dart';
 import 'package:diploma_mobile/constants/app_colors.dart';
 import 'package:diploma_mobile/constants/app_styles.dart';
+import 'package:diploma_mobile/src/features/auth/sign/data/bloc/sign_bloc.dart';
+import 'package:diploma_mobile/src/features/navigation/app_router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
+import '../data/bloc/profile_bloc.dart';
 import '../my_resume/ui/my_resume.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -99,7 +104,10 @@ class ProfileButton extends StatelessWidget {
                 ),
                 backgroundColor: AppColors.accent,
               ),
-              onPressed: () {},
+              onPressed: () {
+                context.read<SignBloc>().add(LogOutSignEvent());
+                context.router.navigate(const AuthScreenRoute());
+              },
               icon: SvgPicture.asset(
                 AppAssets.svg.logOut,
                 color: Colors.white,
@@ -160,8 +168,19 @@ class SettingsList extends StatelessWidget {
   }
 }
 
-class ProfileInfo extends StatelessWidget {
+class ProfileInfo extends StatefulWidget {
   const ProfileInfo({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileInfo> createState() => _ProfileInfoState();
+}
+
+class _ProfileInfoState extends State<ProfileInfo> {
+  @override
+  void initState() {
+    context.read<ProfileBloc>().add(FetchProfileEvent());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,89 +195,80 @@ class ProfileInfo extends StatelessWidget {
         child: Semantics(
           explicitChildNodes: true,
           enabled: true,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 26),
-                child: Semantics(
-                  explicitChildNodes: true,
-                  enabled: true,
-                  child: Semantics(
-                    explicitChildNodes: true,
-                    enabled: true,
-                    child: Row(
-                      children: [
-                        Image.asset(AppAssets.images.profile),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Semantics(
-                            explicitChildNodes: true,
-                            enabled: true,
-                            child: Semantics(
-                              explicitChildNodes: true,
-                              enabled: true,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'Mary Jane',
-                                    style: AppStyles.s20w600,
-                                  ),
-                                  Text('Student', style: AppStyles.s14w400),
-                                ],
-                              ),
-                            ),
+          child: BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              if (state is ProfileData) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Semantics(
+                      explicitChildNodes: true,
+                      enabled: true,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            state.profile.fullName ?? 'no info',
+                            style: AppStyles.s20w600,
                           ),
-                        ),
-                      ],
+                          const Text('Student', style: AppStyles.s14w400),
+                        ],
+                      ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 1,
-                width: double.infinity,
-                color: AppColors.gray200,
-              ),
-              const SizedBox(
-                height: 21,
-              ),
-              Semantics(
-                explicitChildNodes: true,
-                enabled: true,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Email address',
-                        style:
-                            AppStyles.s14w400.copyWith(color: AppColors.grey2)),
-                    const Text('buitek.bayan@gmail.com',
-                        style: AppStyles.s14w400),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              Semantics(
-                explicitChildNodes: true,
-                enabled: true,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Phone number',
-                      style: AppStyles.s14w400.copyWith(color: AppColors.grey2),
+                    const SizedBox(
+                      height: 20,
                     ),
-                    const Text('8 777 123 12 34', style: AppStyles.s14w400),
+                    Container(
+                      height: 1,
+                      width: double.infinity,
+                      color: AppColors.gray200,
+                    ),
+                    const SizedBox(
+                      height: 21,
+                    ),
+                    Semantics(
+                      explicitChildNodes: true,
+                      enabled: true,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Email address',
+                              style: AppStyles.s14w400
+                                  .copyWith(color: AppColors.grey2)),
+                          Text(state.profile.email ?? 'no info',
+                              style: AppStyles.s14w400),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 13,
+                    ),
+                    Semantics(
+                      explicitChildNodes: true,
+                      enabled: true,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Phone number',
+                            style: AppStyles.s14w400
+                                .copyWith(color: AppColors.grey2),
+                          ),
+                          Text(state.profile.phone ?? 'no info',
+                              style: AppStyles.s14w400),
+                        ],
+                      ),
+                    ),
                   ],
-                ),
-              ),
-            ],
+                );
+              }
+              if (state is ProfileLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return const SizedBox.shrink();
+            },
           ),
         ),
       ),
